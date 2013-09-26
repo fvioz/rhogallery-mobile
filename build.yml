@@ -1,0 +1,29 @@
+sdk: "/Users/lucascampbell-rossen/.rvm/gems/ruby-1.9.3-p448/gems/rhodes-4.0.0"
+sdkversion: 4.0.0
+name: rhogallery-mobile
+version: 1.0
+vendor: rhomobile
+build: debug
+bbver: 6.0
+applog: rholog.txt
+iphone:
+  configuration: Release
+  sdk: iphonesimulator6.1
+  provisionprofile:
+  codesignidentity:
+  entitlements:
+  BundleIdentifier: com.rhomobile.rhogallery-mobile
+  BundleURLScheme: rhogallery-mobile
+wp:
+  productid: '86e2e620-0799-0131-ea8a-60f8470f025a'
+symbian:
+  uid: '0xe5b5bf80'
+android:
+  version: 2.3.3
+
+extensions: ["rhoconnect-client"]
+  
+app_type: rhoelements
+motorola_license: "S1LprMlZ`eF%ac7Bjg.:f^kfa;cnrOqIDl0KXttBcEw=T1E|`q0g`fr[/hQCS5E-`?n$Ha5=XCV0d4i@Jxo,2pg6I;VobN7[nxgv.vlhIUo[qq;:"
+capabilities:
+- non_motorola_device
