@@ -3,17 +3,15 @@ $(function() {
   //<a class="needsclick">Ignored by FastClick</a>
   FastClick.attach(document.body);
 
-  //iscroll event listeners 
+  var abc;
+  var def;
+  //iscroll variable
   var myScroll;
-  function loaded() {
-    myScroll = new iScroll('wrapper', { scrollbarClass: 'myScrollbar' });
-  }
-  document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
-  document.addEventListener('DOMContentLoaded', loaded, false);
+  var navMain = $("#nav-main");
 
   $(".custom-link").click(function(){
+    navMain.collapse('hide');
     var href = $(this).attr("href");
-    //$(".page").hide();
     $(".page").load(href);
     return false;
   });
