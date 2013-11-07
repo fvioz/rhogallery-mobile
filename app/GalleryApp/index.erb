@@ -1,0 +1,47 @@
+<div class='span12'>
+  <div class="subheader">
+    <h4 class='pull-left'>
+      <img src="<%=@gallery.image_link%>" class="img-rounded" height:"25" width="25">
+      <%=@gallery.name%>
+    </h4>
+  </div>
+  <div id="wrapper">
+    <div id="scroller">
+      <div id="pullDown">
+        <span class='pullDownIcon'></span>
+        <span class='pullDownLabel'>pull down to sync...</span>
+      </div>
+      <table class='table' WIDTH='100%'>
+        <% @gallery.gallery_apps.each do |galleryapp| %>
+          <%url = galleryapp_url(galleryapp)%>
+          <%btn_kls,btn_name = btn_type(galleryapp)%>
+          <tr>
+            <td class='side-grey'>
+              <img src="<%=galleryapp.icon_link%>" class="img-rounded" height:"50" width="50" />
+            </td>
+            <td class='list-row-desc'>
+              <a href="/app/GalleryApp/show?id=<%=galleryapp.object%>" class="custom-link" data-back="/app/GalleryApp/index?id=<%=@gallery.object%>">
+                <div class='info-grey'>
+                  <div class='gallery-header'><%= galleryapp.name %></div>
+                  <span class="glyphicon glyphicon-star"></span>
+                  <span class="glyphicon glyphicon-star"></span>
+                  <span class="glyphicon glyphicon-star"></span>
+                  <span class="glyphicon glyphicon-star"></span>
+                  <span class="glyphicon glyphicon-star-empty"></span>&nbsp;(23)
+                </div>
+              </a>
+            </td>
+            <td class='list-row'>
+              <a href="<%=url%>" class="<%=btn_kls%>"><%=btn_name%></a>
+            </td>
+          </tr>
+        <%end%>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script type='text/javascript'>
+  setTimeout("check_timer()", 10000);
+  pull_down_wrapper();
+</script>

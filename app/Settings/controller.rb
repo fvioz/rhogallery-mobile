@@ -5,15 +5,10 @@ require 'helpers/browser_helper'
 
 class SettingsController < Rho::RhoController
   include BrowserHelper
-  
+ 
   def index
     @msg = @params['msg']
     render
-  end
-
-  def home
-    @long_list=[]
-    200.times{|x|@long_list << x }
   end
     
   def login
@@ -22,6 +17,7 @@ class SettingsController < Rho::RhoController
   end
 
   def login_callback
+    puts "login callback is here params are #{@params.inspect}"
     errCode = @params['error_code'].to_i
     if errCode == 0
       # run sync if we were successful
@@ -41,22 +37,43 @@ class SettingsController < Rho::RhoController
   end
 
   def do_login
-    if @params['login'] and @params['password']
+    @params['account']='lucas'#'msitechops'
+    @params['login']= 'tom'#'guest'
+    @params['password']='fhnrxihd' #'cccfjwyy' 
+
+    if @params['login'] and @params['password'] and @params['account']
       begin
-        Rho::RhoConnectClient.login(@params['login'], @params['password'], (url_for :action => :login_callback) )
+        username_params = "#{@params['login']}_rho_#{@params['account']}"
+        password_params = "#{@params['password']}_rho_#{Rho.get_app.gallery_platform(System.get_property('platform')).downcase}"
+        settings = Settings.find(:all)
+        if settings and settings.size > 0
+          settings[0].account_id = @params['login']
+          settings[0].username = @params['account']
+          settings[0].save
+        else
+          Settings.create(
+            :account_id => @params['login'],
+            :username => @params['account']
+          )
+        end
+        puts 'about to call login'
+        Rho::RhoConnectClient.login(username_params,password_params, (url_for :action => :login_callback) )
         @response['headers']['Wait-Page'] = 'true'
         render :action => :wait
       rescue Rho::RhoError => e
         @msg = e.message
+        puts "error: #{e.message}"
         render :action => :login
       end
     else
+      puts "no login found error"
       @msg = Rho::RhoError.err_message(Rho::RhoError::ERR_UNATHORIZED) unless @msg && @msg.length > 0
       render :action => :login
     end
   end
   
   def logout
+    Rhom::Rhom.database_full_reset
     Rho::RhoConnectClient.logout
     @msg = "You have been logged out."
     render :action => :login
@@ -80,46 +97,40 @@ class SettingsController < Rho::RhoController
   end
   
   def sync_notify
-  	status = @params['status'] ? @params['status'] : ""
-  	
-  	# un-comment to show a debug status pop-up
-  	#Rho::Notification.showStatus( "Status", "#{@params['source_name']} : #{status}", Rho::RhoMessages.get_message('hide'))
-  	
-  	if status == "in_progress" 	
-  	  # do nothing
-  	elsif status == "complete"
-      Rho::WebView.navigate Rho::RhoConfig.start_path if @params['sync_type'] != 'bulk'
-  	elsif status == "error"
-	
-      if @params['server_errors'] && @params['server_errors']['create-error']
-        Rho::RhoConnectClient.on_sync_create_error(
-          @params['source_name'], @params['server_errors']['create-error'].keys, :recreate )
-      end
-
-      if @params['server_errors'] && @params['server_errors']['update-error']
-        Rho::RhoConnectClient.on_sync_update_error(
-          @params['source_name'], @params['server_errors']['update-error'], :retry )
-      end
+    platform = System::get_property('platform')
+    status = @params['status'] ? @params['status'] : ""
+    
+    # un-comment to show a debug status pop-up
+    #Rho::Notification.showStatus( "Status", "#{@params['source_name']} : #{status}", Rho::RhoMessages.get_message('hide'))
+    if status == "ok"
+      Settings.process_ok(@params['source_name'])
+    elsif status == "in_progress"   
+      # do nothing
+    elsif status == "complete"
+      Alert.hide_popup
+      gallery_apps = GalleryApp.find(:all)
+      installed_apps = BuildInstall.find(:all)
       
-      err_code = @params['error_code'].to_i
-      rho_error = Rho::RhoError.new(err_code)
-      
-      @msg = @params['error_message'] if err_code == Rho::RhoError::ERR_CUSTOMSYNCSERVER
-      @msg = rho_error.message unless @msg && @msg.length > 0   
-
-      if rho_error.unknown_client?( @params['error_message'] )
-        Rhom::Rhom.database_client_reset
-        Rho::RhoConnectClient.doSync
-      elsif err_code == Rho::RhoError::ERR_UNATHORIZED
-        Rho::WebView.navigate(
-          url_for :action => :login, 
-          :query => {:msg => "Server credentials are expired"} )                
-      elsif err_code != Rho::RhoError::ERR_CUSTOMSYNCSERVER
-        Rho::WebView.navigate( url_for :action => :err_sync, :query => { :msg => @msg } )
-      end    
-	end
+      installed_apps.delete_if do |app|
+        delete = false
+        gallery_apps.each do |gapp|
+          delete = true if gapp.object == app.app_id
+        end
+        delete
+      end
+      #Rho::WebView.navigate Rho::RhoConfig.start_path if @params['sync_type'] != 'bulk'
+    elsif status == "error"
+      Settings.process_error(@params)
+    end
+    #only installed apps left are ones that arent in galleries -- uninstall them
+    unless installed_apps.nil?
+      installed_apps.each do |app|
+        if System::app_installed?(app.executable_id)
+          System::app_uninstall(app.executable_id)
+        end
+      end
+    end
   end  
-  
 
   
 end

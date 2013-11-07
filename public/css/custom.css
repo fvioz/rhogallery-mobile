@@ -1,0 +1,66 @@
+.side-grey{
+  vertical-align: middle !important;
+  width:10%;
+}
+
+.info-grey{
+  height:60px;
+  padding-left:8% !important;
+  overflow:hidden;
+  text-align:center
+}
+
+.gallery-header{
+  font-weight:bold;
+  height:40px;
+  overflow:hidden;
+}
+
+.gallery-description{
+  height:100%;
+}
+
+.list-row-desc{
+  text-align:center;
+  width:70%;
+}
+
+.list-row{
+  vertical-align: middle !important;
+  width:10%;
+}
+
+.custom-link{
+  text-decoration:none;
+  color:inherit;
+}
+
+.custom-link:hover,.custom-link:active{
+  text-decoration:none;
+  color:inherit;
+}
+
+.details{
+  background-color:#f9f9f9;
+  margin-top:10px;
+  padding:5px;
+}
+
+.reviews{
+  margin-top:10px;
+  padding:5px;
+  display:none;
+}
+
+.arrow-left {
+  padding-left:5px;
+  width:0;
+  height: 0; 
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent; 
+  border-right:10px solid #645F5F; 
+}
+
+.padd-star {
+  padding:10px;
+}

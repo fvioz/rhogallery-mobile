@@ -1,0 +1,23 @@
+<div class='span12' style='margin-top:15%'>
+    <h3>My Account</h3>
+</div>
+
+<div>
+  <div class="toolbar">
+    <h1>My Account</h1>
+    <a class="button" href="/app/Account/edit/<%=@account.object%>">Edit</a>
+  </div>
+  <ul class="info_box">
+    <li class="info_header" style="-webkit-border-radius:6px 6px 0 0;"><span class="summary_title">Account Information</span></li>
+    <li class="info_item"><span class="summary_title">Name</span><br><span class="summary"><%=@account.name%></span></li>
+    <li class="info_item"><span class="summary_title">Email</span><br><span class="summary"><%=@account.email%></span></li>
+    <li class="info_item"><span class="summary_title">Phone</span><br><span class="summary"><%=@account.cell%></span></li>
+    <li class="info_item"><span class="summary_title">Groups</span><br><span class="summary"><%=@account.tags%></span></li>
+  </ul>
+
+  <center>
+    <a href="/app/Account/password">
+      <img class="password_btn" src="/public/images/change_password.png"/>
+    </a> 
+  </center><br/>
+</div>

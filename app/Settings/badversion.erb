@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head> 
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" /> 
+  <title>Rhomobile</title> 
+  <link href="/public/gd/reset.css" rel="stylesheet" type="text/css" /> 
+  <link href="/public/gd/gd.css" rel="stylesheet" type="text/css" /> 
+</head> 
+<body> 
+  <div id="wrapper"> 
+    <div id="header"> 
+      <h1 id="logo"><a href="#"><img src="/public/gd/logo.gif" alt="Rhohub" width="166" height="44" /></a></h1> 
+    </div><!-- HEADER END--> 
+
+    <div id="heading">RhoGallery needs to be updated</div> 
+
+    <div id="content"> 
+
+      <table id="nav" width="100%" cellpadding="0" cellspacing="0"> 
+        <% platform = System.get_property('platform') %>
+        <%if platform == 'WINDOWS' %>
+          <tr> 
+            <td class="icon"><a href="http://rgd.rhohub.com/wm/latest/RhoGallery.cab?rho_open_target=_blank" rel="external"><img src="/public/gd/windows.gif" alt="" width="22" height="21" /></a></td>
+            <td class="text"><a href="http://rgd.rhohub.com/wm/latest/RhoGallery.cab?rho_open_target=_blank" rel="external">Windows Mobile</a></td>
+          </tr> 
+          <tr><td></td><td></td></tr> 
+        <% elsif platform ==  'ANDROID' %>
+          <tr> 
+            <td class="icon"><a href="http://rgd.rhohub.com/android/latest/RhoGallery.apk?rho_open_target=_blank" rel="external"><img src="/public/gd/android.gif" alt="" width="24" height="25" /></a></td>
+            <td class="text"><a href="http://rgd.rhohub.com/android/latest/RhoGallery.apk?rho_open_target=_blank" rel="external">Android</a></td>
+          </tr> 
+          <tr><td></td><td></td></tr> 
+        <% elsif platform ==  'APPLE' %>
+          <tr> 
+            <td class="icon"></td> 
+            <td class="text">Please contact your administrator</td> 
+          </tr> 
+          <tr><td></td><td></td></tr> 
+
+        <% end %>
+      </table> 
+
+    </div> 
+
+  </div><!-- WRAPPER END--> 
+</body> 
+</html>

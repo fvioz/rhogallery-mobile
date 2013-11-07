@@ -125,5 +125,16 @@ module ApplicationHelper
   def caller_request_query_to_hash
     @caller_request = Rho::JSON.parse(@params['caller_request']) if @params['caller_request']
   end
+
+  # Gallery Build helpers
+  def gallery_platform(platform)
+    platforms = {
+      'APPLE' => 'iOS',
+      'WINDOWS' => 'Windows Mobile', 
+      'ANDROID' => 'Android',
+      'WINDOWS_DESKTOP' => 'Win32' 
+    }
+    platforms[platform]
+  end
   
 end

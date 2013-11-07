@@ -1,0 +1,33 @@
+<div class='span12'>
+  <div class="subheader">
+    <h4 class='pull-left'>Galleries</h4>
+  </div>
+  <div id="wrapper">
+    <div id="scroller">
+      <div id="pullDown">
+        <span class='pullDownIcon'></span>
+        <span class='pullDownLabel'>pull down to sync...</span>
+      </div>
+      <table class='table'>
+        <% @galleries.each do |gallery| %> 
+          <tr>
+            <td class='side-grey'>
+              <img src="<%=gallery.image_link%>" class="img-rounded" height:"50" width="50">
+            </td>
+            <td class='list-row-desc'>
+              <a href="/app/GalleryApp/index?id=<%=gallery.object%>" class="custom-link" data-back="/app/Gallery">
+                <div class='info-grey'>
+                  <span class='gallery-header'><%= gallery.name %></span><br/>
+                  <p class='gallery-description'><%= gallery.description%></p>
+                </div>
+              </a>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>
+<script type='text/javascript'>
+  pull_down_wrapper();
+</script>

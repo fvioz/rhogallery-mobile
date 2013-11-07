@@ -1,0 +1,76 @@
+<div id="wrapper" style='top:50px;'>
+  <div id="scroller">
+    <div class='span12'>
+      <%url = galleryapp_url(@galleryapp)%>
+      <%btn_kls,btn_name = btn_type(@galleryapp)%>
+      <table class='table showheader' WIDTH='100%'>
+        <tr>
+          <td style='vertical-align:middle'>
+            <img src="<%=@galleryapp.icon_link%>" class="img-rounded" height:"50" width="50">
+          <td>
+          
+          <td>
+            <%=@galleryapp.name%><br/>
+            <%@review_avg.times do |r|%>
+              <span class="glyphicon glyphicon-star"></span>
+            <%end%>
+            <%(5-@review_avg).times do |r|%>
+              <span class="glyphicon glyphicon-star-empty"></span>
+            <%end%>
+            &nbsp;(<%=@galleryapp.reviews.count%>)<br/>
+            <a href="<%=url%>" class="<%=btn_kls%>"><%=btn_name%></a>
+            <%if btn_name == 'open'%>
+              <a href="/app/GalleryApp/uninstall_app?executable_id=#{Rho::RhoSupport.url_encode(@galleryapp.select_build_link.executable_id)}&id=#{@galleryapp.object}" class='btn btn-danger btn-xs'>uninstall</a>
+            <%end%>
+          </td>
+        </tr>
+      </table>
+      <div class='span12'>
+        <div class="btn-group btn-group-justified" style='margin-bottom:10px'>
+          <a id='detail-tab' class="btn btn-default active toggleShow">Details</a>
+          <a class="btn btn-default toggleShow">Reviews</a>
+        </div>
+        <div class='details'>
+          <%=@galleryapp.description%>
+        </div>
+        <div class='reviews'>
+          <table class='table' style='background-color:#f9f9f9' WIDTH='100%'>
+            <%["5","4","3","2","1"].each do |stars|%>
+              <tr>
+                <td>
+                  <%stars.to_i.times do |i|%>
+                    <span class="glyphicon glyphicon-star"></span>
+                  <%end%>
+                  <%(5-stars.to_i).times do |k|%>
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                  <%end%>
+                </td>
+                <td>
+                  <%=@review_hsh[stars]%>
+                </td>
+              </tr>
+            <%end%>
+          </table>
+          <a class='btn btn-default custom-link' href='/app/Review/new?id=<%=@galleryapp.object%>' data-back='/app/GalleryApp/show?id=<%=@galleryapp.object%>' style='margin:5px 0 5px 0'>Write Review</a>
+          <div class="list-group">
+            <%@galleryapp.reviews.each do |review|%>
+              <div class='list-group-item'>
+                <h4 class="list-group-item-heading"><%=review.title%></h4>
+                <%review.stars.to_i.times do |i|%>
+                  <span class="glyphicon glyphicon-star"></span>
+                <%end%>
+                <%(5 - review.stars.to_i).times do |i|%>
+                  <span class="glyphicon glyphicon-star-empty"></span>
+                <%end%>
+                <p class="list-group-item-text"><%=review.description%></p>
+              </div>
+            <%end%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type='text/javascript'>
+  basic_wrapper();
+</script>

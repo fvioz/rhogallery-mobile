@@ -1,25 +1,21 @@
-<div data-role="page" data-add-back-btn="true">
-
-  <div data-role="header" data-position="inline">
-    <h1>Login</h1>
-  </div>
-
-  <div data-role="content">
-    <form method="POST" action="<%= url_for :action => :do_login %>">
-      <% if @msg %>
-          <div class="error-message"><%= @msg %></div>
-      <% end %>
-
-      <div data-role="fieldcontain">
-        <label for="login" class="itemLabel">Login</label>
-        <input type="text" id="login" name="login" class="itemValue" <%= placeholder("Login") %> />
-      </div>
-      <div data-role="fieldcontain">
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" class="itemValue" <%= placeholder("Password") %> />
-      </div>
-      <input type="submit" value="Login"/>
-    </form>
-  </div>
-
+<div class='span12' style='margin-top:10%'>
+  <form role='form' action="<%= url_for :action => :do_login %>">
+    <% if @msg.size > 0 %>
+      <div class="alert alert-danger"><%= @msg %></div>
+    <% end %>
+    <div class='form-group'>
+      <label for="account">Rhohub Account</label>
+      <input type="text" id="account" name="account" class="form-control" placeholder="Account">
+    </div>
+    <div class='form-group'>
+      <label for="login">Login</label>
+      <input type="text" id="login" name="login" class="form-control" placeholder="Login">
+    </div>
+    <div class='form-group'>
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" class="form-control" placeholder="Password">
+    </div>
+    <button type="submit" class='btn btn-default'>Submit</button>
+  </form>
 </div>
+
