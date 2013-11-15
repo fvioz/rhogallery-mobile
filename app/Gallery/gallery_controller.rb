@@ -20,7 +20,7 @@ class GalleryController < Rho::RhoController
   end
 
   def do_sync
-    puts "************* do sync call refresh"
+    Rho::RhoConnectClient.doSync
     WebView.refresh
   end
 

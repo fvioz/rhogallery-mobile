@@ -27,7 +27,7 @@
     <!-- For all other devices -->
     <!-- Size should be 32 x 32 pixels -->
     <%#= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
-    
+
     <% if Rho::System.getProperty('platform') == 'APPLE' || Rho::System.getProperty('platform') == 'ANDROID' ||
         ( Rho::System.getProperty('platform') != 'WINDOWS' && Rho::System.getProperty('webviewFramework') =~ /^WEBKIT/) %>
         <!--script src="/public/api/rhoapi-modules.js" type="text/javascript"></script> -->
@@ -47,7 +47,9 @@
         <script src='/public/js/jquery.sidr.min.js' type='text/javascript'></script>
         <script src="/public/js/jquery.touchSwipe.min.js"></script>
         <script src="/public/js/application.js" type="text/javascript"></script>
-        
+        <% if Rho::System.getProperty('platform') == 'ANDROID' %>
+          <script src="/public/js/androidsux.js"></script>
+        <%end%>
     <% end %>
    <!--
 -->
@@ -56,7 +58,7 @@
 <body data-platform="<%= Rho::System.getProperty('platform') %>">
   <nav id='header' class="navbar navbar-default" role="navigation">
     <div style='padding-top:7px;vertical-align: middle'>
-      <a id='back-btn' href="/app/Gallery/index" class='arrow-left pull-left custom-link' style='margin-top:5px'></a>
+      <a id='back-btn' href="/app/Gallery/index" class='btn btn-default pull-left custom-link'>back</a>
       <button id="right-menu" href="#sidr" type='button' class='btn btn-default pull-right'>
         <span class="glyphicon glyphicon-align-justify"></span>
       </button>
@@ -66,7 +68,7 @@
 
   <div id='sidr-right'>
     <ul>
-      <li><a href="/app/Gallery" class='custom-link'>Galleries</a></li>
+      <li><a href="/app/Gallery" class='custom-link' data-back="/app/Gallery">Galleries</a></li>
       <li><a href="/app/Account" class='custom-link'>Accounts</a></li>
       <li><a href="/app/Settings" class='custom-link'>Settings</a></li>
       <%if Rho::RhoConnectClient.isLoggedIn%>

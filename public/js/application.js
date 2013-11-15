@@ -14,11 +14,13 @@ $(function() {
   window.addEventListener("orientationchange", function() {
     scroller.refresh();
   }, false);
-
+  
   //all links handled here
-  $('body').on("click",".custom-link",function(event) {
+  $('body').on("click",".custom-link",function(e) {
+    e.preventDefault();
+    //e.stopPropagation();
     var back;
-    var that = event.currentTarget;
+    var that = e.currentTarget;
     $.sidr('close', 'sidr-right');
     var href = $(that).attr("href");
     $(".page").load(href);
@@ -29,7 +31,7 @@ $(function() {
   });
 
   //app show page review/details toggle
-  $('.page').on("click",".toggleShow",function(){
+  $('.page').on("click",".toggleShow",function(e){
     var html = $(this).html();
     $(".active").attr("class",$(".active").attr("class").replace("active",""));
     $(this).attr("class",$(this).attr("class") + " active");
@@ -57,24 +59,24 @@ $(function() {
   });
 
   //review star clicks
-  $('.page').on("click","[id^=star]",function(){
-    var item = $(this).attr("id").replace("star","");
-    var kls = $("#star"+item).attr("class");
-    if(kls.match(/empty/) === null){
-      kls = kls.replace("glyphicon-star","glyphicon-star-empty");
-      for(var i=parseInt(item);i <= 5;i++){
-        $("#star"+i).attr("class",kls);
+  $('.page').on("click","[id^=star]",function(e){
+    //if(preventGhostClick(e) === true){
+      var item = $(this).attr("id").replace("star","");
+      var kls = $("#star"+item).attr("class");
+      if(kls.match(/empty/) === null){
+        kls = kls.replace("glyphicon-star","glyphicon-star-empty");
+        for(var i=parseInt(item);i <= 5;i++){
+          $("#star"+i).attr("class",kls);
+        }
       }
-    }
-    else{
-      kls = kls.replace("glyphicon-star-empty","glyphicon-star");
-      for(var i=parseInt(item);i >= 0;i--){
-        $("#star"+i).attr("class",kls);
+      else{
+        kls = kls.replace("glyphicon-star-empty","glyphicon-star");
+        for(var i=parseInt(item);i >= 0;i--){
+          $("#star"+i).attr("class",kls);
+        }
       }
-    }
+    //}
   });
-
-
 
   $('#right-menu').sidr({
     name: 'sidr-right',

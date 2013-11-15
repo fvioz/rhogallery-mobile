@@ -17,7 +17,6 @@ class SettingsController < Rho::RhoController
   end
 
   def login_callback
-    puts "login callback is here params are #{@params.inspect}"
     errCode = @params['error_code'].to_i
     if errCode == 0
       # run sync if we were successful
@@ -37,9 +36,13 @@ class SettingsController < Rho::RhoController
   end
 
   def do_login
-    @params['account']='lucas'#'msitechops'
-    @params['login']= 'tom'#'guest'
-    @params['password']='fhnrxihd' #'cccfjwyy' 
+    #@params['account']='msitechops'
+    #@params['login']= 'guest'
+    #@params['password']= 'cccfjwyy'
+
+    @params['account']='lucas'
+    @params['login']= 'tom'
+    @params['password']= 'fhnrxihd'
 
     if @params['login'] and @params['password'] and @params['account']
       begin
@@ -56,7 +59,6 @@ class SettingsController < Rho::RhoController
             :username => @params['account']
           )
         end
-        puts 'about to call login'
         Rho::RhoConnectClient.login(username_params,password_params, (url_for :action => :login_callback) )
         @response['headers']['Wait-Page'] = 'true'
         render :action => :wait

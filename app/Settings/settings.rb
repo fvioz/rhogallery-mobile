@@ -20,7 +20,7 @@ class Settings
         WebView.navigate( url_for :action => :login )
         Alert.show_popup "Account not active. You have been logged out."
       end
-    when "Gallery" 
+    when "Gallery"
       Alert.show_status( "Synchronizing", "Galleries", Rho::RhoMessages.get_message('hide'))
     when "BuildInstall" 
       Alert.show_status( "Synchronizing", "BuildInstalls", Rho::RhoMessages.get_message('hide'))
@@ -52,11 +52,13 @@ class Settings
       Rhom::Rhom.database_client_reset
       Rho::RhoConnectClient.doSync
     elsif err_code == Rho::RhoError::ERR_UNATHORIZED
-      Rho::WebView.navigate(
-        url_for :action => :login, 
-        :query => {:msg => "Server credentials are expired"} )                
+      msg = "Server credentials are expired"
+      Rho::WebView.navigate("/app/Settings/login?msg=#{msg}")
+        # url_for :action => :login, 
+        # :query => {:msg => ""} )                
     elsif err_code != Rho::RhoError::ERR_CUSTOMSYNCSERVER
-      Rho::WebView.navigate( url_for :action => :err_sync, :query => { :msg => @msg } )
+      #url_for :action => :err_sync, :query => { :msg => @msg }
+      Rho::WebView.navigate("/app/Settings/err_sync?msg=#{@msg}")
     end    
   end
 end

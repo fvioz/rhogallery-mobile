@@ -2,8 +2,9 @@
   <div class="subheader">
     <h4 class='pull-left'>Settings</h4>
   </div>
+  <div id='wrapper'>
     <% if @msg %>
-      <div class="alert alert-danger"><%= @msg %></div>
+      <div class="alert alert-info"><%= @msg %></div>
     <% end %>
     <table class='table table-striped'>
       <tr>
@@ -17,4 +18,5 @@
         <td colspan=2><a href="<%= url_for :action => :do_sync %>">Perform Sync</a></td>
       </tr>
     </table>
+  </div>
 </div>

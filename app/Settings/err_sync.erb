@@ -1,11 +1,8 @@
-<div data-role="page">
-
-  <div data-role="header" data-position="inline">
-    <h1>Sync error</h1>
+<div class='span12' style='margin-top:10%'>
+  <div class="subheader">
+    <h4 class='pull-left'>Sync Error</h4>
   </div>
-
-  <div data-role="content">
-        <div class="error-message"><%= @params['msg'] %></div>
+  <div id='wrapper'>
+    <div class="alert alert-danger"><%= @params['msg'] %></div>
   </div>
-
 </div>
