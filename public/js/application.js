@@ -104,6 +104,7 @@ function set_back_btn(href,n){
       back = n.data("back");
       backHash[href] = back;
     }
+    //$("#rho-title").html(href);
     $("#back-btn").attr("href",back);
   }
 }

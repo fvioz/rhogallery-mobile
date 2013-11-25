@@ -62,14 +62,14 @@
       <button id="right-menu" href="#sidr" type='button' class='btn btn-default pull-right'>
         <span class="glyphicon glyphicon-align-justify"></span>
       </button>
-      <p style='text-align:-webkit-center;font-size:1.5em'>RhoGallery</p>
+      <p id='rho-title' style='text-align:-webkit-center;font-size:1.5em'>RhoGallery</p>
     </div>
   </nav>
 
   <div id='sidr-right'>
     <ul>
       <li><a href="/app/Gallery" class='custom-link' data-back="/app/Gallery">Galleries</a></li>
-      <li><a href="/app/Account" class='custom-link'>Accounts</a></li>
+      <li><a href="/app/Organization" class='custom-link'>Organizations</a></li>
       <li><a href="/app/Settings" class='custom-link'>Settings</a></li>
       <%if Rho::RhoConnectClient.isLoggedIn%>
         <li><a href="/app/Settings/logout" class='custom-link'>Log out</a></li>

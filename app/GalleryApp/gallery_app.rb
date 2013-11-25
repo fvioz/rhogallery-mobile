@@ -45,7 +45,7 @@ class GalleryApp
     }
     platform = platforms[System.get_property('platform')]
     begin
-      # filter build list by platform
+      #filter build list by platform
       conditions = {
         :app_id => object,
         :device => platform

@@ -6,7 +6,7 @@ class ReviewController < Rho::RhoController
 
   def new
     @id        = @params['id']
-    client_id = System.getProperty("uuid")
+    client_id  = Rhom::Rhom::client_id
     puts "uuid is ************ #{client_id}"
     @review = Review.find(:first,:conditions=>{'client_id'=>client_id})
     if @review
@@ -19,7 +19,7 @@ class ReviewController < Rho::RhoController
   end
 
   def create
-    @params.merge!({"client_id"=> System.getProperty("uuid")})
+    @params.merge!({"client_id"=> Rhom::Rhom::client_id})
     Review.create(@params)
     render
   end

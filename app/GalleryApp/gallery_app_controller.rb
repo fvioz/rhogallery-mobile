@@ -40,8 +40,6 @@ class GalleryAppController < Rho::RhoController
           #if error occurred during download timeout spinner
           #puts "before check is expired #{app.downloading == "true" and app.downloading and (Time.now.to_i > app.download_time.to_i)}****************************"
           if app.downloading == "true" and app.downloading and (Time.now.to_i > app.download_time.to_i)
-            #puts "***********************************************"
-            #puts "reseting install button *******************"
             app.downloading = "false"
             app.download_time = ""
             app.save
@@ -81,38 +79,58 @@ class GalleryAppController < Rho::RhoController
     url=Rho::RhoSupport.url_decode(@params['url_install'])
     platform = System::get_property('platform')
 
-    @gallery_app = GalleryApp.find(@params['id'])    
-    @state_install = @gallery_app.state_install
-    @gallery_app.state_install=true
-
-    if @state_install == "false"
-      @gallery_app.downloading = "true"
-      @gallery_app.download_time = Time.now.to_i + 300
-      @gallery_app.save
-    end
+    @gallery_app = GalleryApp.find(@params['id'])
+    @gallery_app.downloading = "true"
+    @gallery_app.download_time = Time.now.to_i + 300
+    @gallery_app.save    
     
     if url == 'vpp'
       RedemptionCode.sync_redemption_codes(@params['id'],@gallery_app.build_install.object)
       render :action => :wait
     else
-      if platform == 'APPLE' ||platform == 'ANDROID'
+      if platform == 'APPLE' || platform == 'ANDROID'
         redirect :action => :index, :query=>{:id => $gallery_id}
       else
         redirect :action => :show,:query=>{:id=>@params['id'],:msg=>"Application is being installed",:btn_install_clicked=>'true'}
       end
-    
+
       #download app in s3 for correct platform
-      if platform == 'APPLE'
-        $iphone_url = "itms-services://?action=download-manifest&url=#{url}"
-        System.open_url($iphone_url)
-        $iphone_url = nil
-      elsif platform != 'APPLE' && platform != 'ANDROID' && platform != 'WINDOWS_DESKTOP'
+      url = "itms-services://?action=download-manifest&url=#{url}"
+      if platform == "APPLE"
         System.open_url(url)
-      elsif platform == 'ANDROID' || platform == 'WINDOWS_DESKTOP'
-        System.app_install(url)
+      else
+        download_from_s3(url,@gallery_app.object)
       end
     end
   end
+
+  def download_from_s3(url,app_id)
+    filename = url.split("/").last
+    dwnldpath = Rho::RhoFile.join(Rho::Application.userFolder,filename)
+    filepath = "file://#{dwnldpath}"
+
+    downloadfileProps = Hash.new
+    downloadfileProps["url"]=url
+    downloadfileProps["filename"] = dwnldpath
+    downloadfileProps["overwriteFile"] = true
+    Rho::Network.downloadFile(downloadfileProps, url_for(:action => :download_file_callback),"&file=#{filepath}&id=#{app_id}")
+  end
+
+  def download_file_callback
+    platform = System::get_property('platform')
+    gallery_app = GalleryApp.find(@params['id'])
+    if @params["status"] == "ok"
+      System.app_install(@params['file'])
+      gallery_app.state_install = true
+    else
+      Alert.show_popup "Download Failed"
+    end
+    gallery_app.download_time = ""
+    gallery_app.downloading = "false"
+    gallery_app.save
+    WebView.refresh()
+  end
+
   
   def uninstall_app
     @gallery_app = GalleryApp.find(@params['id'])
@@ -127,7 +145,6 @@ class GalleryAppController < Rho::RhoController
     if System::app_installed?(@params['executable_id'])
       System::app_uninstall(@params['executable_id'])
     end
-
   end
 
   def run_app
