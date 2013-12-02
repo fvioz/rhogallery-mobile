@@ -10,13 +10,11 @@ class GalleryApp
   attr_accessor :build, :build_install
 
   def reviews
-    #Review.find(:all,:conditions =>{:galleryapp_id =>self.object})
-    Review.find(:all)
+    Review.find(:all,:conditions =>{:app_id =>self.object})
   end
 
   def review_avg_hsh
-    #Review.find(:all,:conditions =>{:galleryapp_id =>self.object})
-    reviews = Review.find(:all)
+    reviews = Review.find(:all,:conditions =>{:app_id =>self.object})
     hsh = {"5"=>0,"4"=>0,"3"=>0,"2"=>0,"1"=>0,"0"=>0}
     reviews.each do |review|
       hsh[review.stars] += 1
@@ -25,15 +23,14 @@ class GalleryApp
   end
 
   def review_avg
-    #Review.find(:all,:conditions =>{:galleryapp_id =>self.object})
-    reviews = Review.find(:all)
+    reviews = Review.find(:all,:conditions =>{:app_id =>self.object})
     total = 0
     reviews.each do |review|
       total += review.stars.to_i
     end
     puts "total is #{total}"
     puts "reviews.count is #{reviews.count}"
-    (total / reviews.count).floor
+    reviews.count > 0 ? (total / reviews.count).floor : 0
   end
   
   def select_build_link

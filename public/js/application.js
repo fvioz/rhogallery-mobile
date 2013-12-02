@@ -50,6 +50,11 @@ $(function() {
   $('.page').on("click",".custom-form",function(){
     $(this).attr("disabled","disabled");
     var href = $("form").attr("action");
+
+    //return if validation fails
+    if(validate_length($("#review-desc").val(),$("#review-title").val()) === false)
+      return false;
+
     var data = $("form").serialize() + "&stars=" + $(".glyphicon-star").length;
     var that = $(this);
     $.post(href,data,function(resp){
@@ -93,6 +98,21 @@ $(window).swipe({
   },
   threshold:0
 });
+
+function validate_length(description,title){
+  var res = true;
+  if(description.length < 2){
+    $("#review-desc").css("border","2px solid red");
+    $("#review-desc").val("Please enter a valid description");
+    res = false;
+  }
+  if(title.length < 2){
+    $("#review-title").css("border","2px solid red");
+    $("#review-title").val("Please enter a valid title");
+    res = false;
+  }
+  return res;
+}
 
 function set_back_btn(href,n){
   if((n.data("back") !== undefined && n.data("back").length > 3) || n.attr("id") == "back-btn"){

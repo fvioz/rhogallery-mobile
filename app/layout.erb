@@ -58,7 +58,7 @@
 <body data-platform="<%= Rho::System.getProperty('platform') %>">
   <nav id='header' class="navbar navbar-default" role="navigation">
     <div style='padding-top:7px;vertical-align: middle'>
-      <a id='back-btn' href="/app/Gallery/index" class='btn btn-default pull-left custom-link'>back</a>
+      <a id='back-btn' href="/app/Organization" class='btn btn-default pull-left custom-link'>back</a>
       <button id="right-menu" href="#sidr" type='button' class='btn btn-default pull-right'>
         <span class="glyphicon glyphicon-align-justify"></span>
       </button>
@@ -68,8 +68,8 @@
 
   <div id='sidr-right'>
     <ul>
-      <li><a href="/app/Gallery" class='custom-link' data-back="/app/Gallery">Galleries</a></li>
       <li><a href="/app/Organization" class='custom-link'>Organizations</a></li>
+      <li><a href="/app/Gallery" class='custom-link' data-back="/app/Organization">Galleries</a></li>
       <li><a href="/app/Settings" class='custom-link'>Settings</a></li>
       <%if Rho::RhoConnectClient.isLoggedIn%>
         <li><a href="/app/Settings/logout" class='custom-link'>Log out</a></li>

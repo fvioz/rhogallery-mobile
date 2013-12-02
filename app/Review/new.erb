@@ -11,11 +11,12 @@
         <div style="text-align:center;color:#555555">Tap a Star to Rate</div>
       </div>
       <form role="form" action="/app/Review/create" style='padding:0 5px 0 5px'>
+        <input type='hidden' name='app_id' value='<%=@id%>' />
         <div class="form-group" style="margin-top:10px">
-          <input name='title' type='text' class='form-control' placeholder='Enter title'/>
+          <input id="review-title" name='title' type='text' class='form-control' placeholder='Enter title'/>
         </div>
         <div class="form-group" style="margin-top:5px">
-          <textarea name='review' class="form-control" rows="12" placeholder='Enter Review'></textarea>
+          <textarea id="review-desc" name='description' class="form-control" rows="12" placeholder='Enter Review'></textarea>
         </div>
         <button type="submit" class="btn btn-default custom-form" data-back='/app/GalleryApp/show?id=<%=@id%>' style="margin-top:5px">Send</button>
       </form>

@@ -6,12 +6,12 @@ class ReviewController < Rho::RhoController
 
   def new
     @id        = @params['id']
-    client_id  = Rhom::Rhom::client_id
-    puts "uuid is ************ #{client_id}"
-    @review = Review.find(:first,:conditions=>{'client_id'=>client_id})
+    #client_id  = Rhom::Rhom::client_id
+    #puts "uuid is ************ #{client_id}"
+    @review = Review.find(:first,:conditions=>{'app_id'=>@id})
     if @review
       Review.current_review = Review.find(:all).first
-      Review.current_review = Review.create({:client_id=>'testid',:stars=>2,:description=>"very good app",:title=>"great"}) unless Review.current_review
+      #Review.current_review = Review.create({:client_id=>'testid',:stars=>2,:description=>"very good app",:title=>"great"}) unless Review.current_review
       render :action=>:edit
     else
       render
