@@ -10,7 +10,7 @@ class GalleryApp
   attr_accessor :build, :build_install
 
   def reviews
-    Review.find(:all,:conditions =>{:app_id =>self.object})
+    Review.find(:all,:conditions =>{:app_id =>self.object},:order=>'sort_date',:orderdir => "DESC")
   end
 
   def review_avg_hsh
@@ -28,8 +28,6 @@ class GalleryApp
     reviews.each do |review|
       total += review.stars.to_i
     end
-    #puts "total is #{total}"
-    #puts "reviews.count is #{reviews.count}"
     reviews.count > 0 ? (total / reviews.count).floor : 0
   end
   
