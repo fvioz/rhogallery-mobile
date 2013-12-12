@@ -6,7 +6,7 @@
       <table class='table showheader' WIDTH='100%'>
         <tr>
           <td style='vertical-align:middle'>
-            <img src="<%=@galleryapp.icon_link%>" class="img-rounded" height:"50" width="50">
+            <img src="<%=@galleryapp.logo_url%>" class="img-rounded" height:"50" width="50">
           <td>
           
           <td>
@@ -20,7 +20,7 @@
             &nbsp;(<%=@galleryapp.reviews.count%>)<br/>
             <a href="<%=url%>" class="<%=btn_kls%>"><%=btn_name%></a>
             <%if btn_name == 'open'%>
-              <a href="/app/GalleryApp/uninstall_app?executable_id=<%=Rho::RhoSupport.url_encode(@galleryapp.select_build_link.executable_id)%>&id=<%=@galleryapp.object%>" class='btn btn-danger btn-xs'>uninstall</a>
+              <a href="/app/GalleryApp/uninstall_app?bundle_id=<%=Rho::RhoSupport.url_encode(@galleryapp.select_build_link.bundle_id)%>&id=<%=@galleryapp.object%>" class='btn btn-danger btn-xs'>uninstall</a>
             <%end%>
           </td>
         </tr>

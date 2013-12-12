@@ -28,16 +28,16 @@ class GalleryApp
     reviews.each do |review|
       total += review.stars.to_i
     end
-    puts "total is #{total}"
-    puts "reviews.count is #{reviews.count}"
+    #puts "total is #{total}"
+    #puts "reviews.count is #{reviews.count}"
     reviews.count > 0 ? (total / reviews.count).floor : 0
   end
   
   def select_build_link
     platforms = {
-      'APPLE' => 'iOS', 
+      'APPLE' => 'ios', 
       'WINDOWS' => 'Windows Mobile', 
-      'ANDROID' => 'Android',
+      'ANDROID' => 'android',
       'WINDOWS_DESKTOP' => 'Win32'
     }
     platform = platforms[System.get_property('platform')]
@@ -45,13 +45,15 @@ class GalleryApp
       #filter build list by platform
       conditions = {
         :app_id => object,
-        :device => platform
+        :build_type => platform
       }
-      build = Build.find(:all, 
+      @build = Build.find(:first, 
         :conditions => conditions,
         :order => :version
       )
-      @build = (build and build.size > 0) ? build.last : nil
+      #@build = (build and build.size > 0) ? build.last : nil
+      @build.extract_build_url if @build
+
     rescue Exception=>e
       puts "exception **************** #{e.message}"
       @build = nil
@@ -76,7 +78,7 @@ class GalleryApp
     if state == "false"
       install.destroy
     else
-      install.executable_id = build.executable_id 
+      install.bundle_id = build.bundle_id 
       install.installed = state
       install.save
       self.build_install = install
@@ -92,8 +94,8 @@ class GalleryApp
         :build_id => build.object
       }
     )
-    if build && build.executable_id && build.executable_id != ""
-      if System::app_installed? build.executable_id
+    if build && build.bundle_id && build.bundle_id != ""
+      if System::app_installed? build.bundle_id
         installed = "true"
       elsif build.url == 'vpp' and install and install.locked == 'true'
         installed = "maybe"

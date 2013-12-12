@@ -23,11 +23,11 @@ module BrowserHelper
     else
       case galleryapp.state_install
       when "true"
-        url = "/app/GalleryApp/run_app?security_token=#{Rho::RhoSupport.url_encode(galleryapp.select_build_link.security_token)}&executable_id=#{Rho::RhoSupport.url_encode(galleryapp.select_build_link.executable_id)}&id=#{galleryapp.object}"
+        url = "/app/GalleryApp/run_app?security_token=#{Rho::RhoSupport.url_encode(galleryapp.select_build_link.security_token)}&bundle_id=#{Rho::RhoSupport.url_encode(galleryapp.select_build_link.bundle_id)}&id=#{galleryapp.object}"
       when "false"
         url = "/app/GalleryApp/install_app?url_install=#{Rho::RhoSupport.url_encode(galleryapp.select_build_link.url)}&id=#{galleryapp.object}"
       when "maybe"
-        url = "/app/GalleryApp/uninstall_app?executable_id=#{Rho::RhoSupport.url_encode(galleryapp.select_build_link.executable_id)}&id=#{galleryapp.object}"
+        url = "/app/GalleryApp/uninstall_app?bundle_id=#{Rho::RhoSupport.url_encode(galleryapp.select_build_link.bundle_id)}&id=#{galleryapp.object}"
       end
     end
     url
@@ -37,8 +37,8 @@ module BrowserHelper
     state_install = galleryapp.state_install
     btn = "btn "
     if galleryapp.downloading == "true"
-      btn += "btn-warning "
-      name = "downloading..."
+      btn += "btn-warning blink "
+      name = "downloading"
     else
       case state_install
       when "true"

@@ -1,5 +1,6 @@
 # The model has already been created by the framework, and extends Rhom::RhomObject
 # You can add more methods here
+require "digest/md5"
 class Organization
   include Rhom::PropertyBag
 

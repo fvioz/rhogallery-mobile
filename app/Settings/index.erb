@@ -6,17 +6,23 @@
     <% if @msg %>
       <div class="alert alert-info"><%= @msg %></div>
     <% end %>
-    <table class='table table-striped'>
-      <tr>
-        <td>Client ID:</td>
-        <td><%= Rhom::Rhom::client_id %></td>
-      </tr>
-      <tr>
-        <td colspan=2><a href="<%= url_for :action => :reset %>">Reset Database</a></td>
-      </tr>
-      <tr>
-        <td colspan=2><a href="<%= url_for :action => :do_sync %>">Perform Sync</a></td>
-      </tr>
-    </table>
+    <ul class='list-group'>
+      <li class="list-group-item">Client ID<br/>
+        <h4><span class='label label-default'><%= Rhom::Rhom::client_id %></span></h4>
+      </li>
+      <li class="list-group-item"><a class='btn btn-primary' href="<%= url_for :action => :do_sync %>">Perform Sync</a></li>
+      <li class="list-group-item"><a class='btn btn-danger confirm_reset' href="<%= url_for :action => :do_reset %>">Reset Database</a></li>
+    </ul>
   </div>
 </div>
+<script type='text/javascript'>
+  $(".confirm_reset").click(function(e){
+    e.preventDefault();
+    if(confirm("Resetting removes all objects from your device.")){
+      window.location = "/app/Settings/do_reset";
+    }
+    else{
+      return false;
+    }
+  })
+</script>

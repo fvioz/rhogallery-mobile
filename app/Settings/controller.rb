@@ -41,22 +41,17 @@ class SettingsController < Rho::RhoController
     #@params['login']= 'guest'
     #@params['password']= 'cccfjwyy'
 
-    #@params['account']='lucas'
-    @params['email']= 'lucas.campbellrossen@gmail.com'
-    @params['password']= 'SfVGaGz5'
+    @params['email']= 'campbellmo79@gmail.com'
+    @params['password']= 'cZmEhD53'
 
-    if @params['email'] and @params['password'] #and @params['account']
+    if @params['email'] and @params['password']
       begin
-        #username_params = "#{@params['login']}_rho_#{@params['account']}"
-        #password_params = "#{@params['password']}_rho_#{Rho.get_app.gallery_platform(System.get_property('platform')).downcase}"
         settings = Settings.find(:all)
         if settings and settings.size > 0
-          #settings[0].account_id = @params['email']
           settings[0].email = @params['email']
           settings[0].save
         else
           Settings.create(
-            #:account_id => @params['email'],
             :username => @params['email']
           )
         end
@@ -74,44 +69,6 @@ class SettingsController < Rho::RhoController
       render :action => :login
     end
   end
-  # def do_login_old
-  #   #@params['account']='msitechops'
-  #   #@params['login']= 'guest'
-  #   #@params['password']= 'cccfjwyy'
-
-  #   @params['account']='lucas'
-  #   @params['login']= 'tom'
-  #   @params['password']= 'fhnrxihd'
-
-  #   if @params['login'] and @params['password'] and @params['account']
-  #     begin
-  #       username_params = "#{@params['login']}_rho_#{@params['account']}"
-  #       password_params = "#{@params['password']}_rho_#{Rho.get_app.gallery_platform(System.get_property('platform')).downcase}"
-  #       settings = Settings.find(:all)
-  #       if settings and settings.size > 0
-  #         settings[0].account_id = @params['login']
-  #         settings[0].username = @params['account']
-  #         settings[0].save
-  #       else
-  #         Settings.create(
-  #           :account_id => @params['login'],
-  #           :username => @params['account']
-  #         )
-  #       end
-  #       Rho::RhoConnectClient.login(username_params,password_params, (url_for :action => :login_callback) )
-  #       @response['headers']['Wait-Page'] = 'true'
-  #       render :action => :wait
-  #     rescue Rho::RhoError => e
-  #       @msg = e.message
-  #       puts "error: #{e.message}"
-  #       render :action => :login
-  #     end
-  #   else
-  #     puts "no login found error"
-  #     @msg = Rho::RhoError.err_message(Rho::RhoError::ERR_UNATHORIZED) unless @msg && @msg.length > 0
-  #     render :action => :login
-  #   end
-  # end
   
   def logout
     Rhom::Rhom.database_full_reset
@@ -166,8 +123,8 @@ class SettingsController < Rho::RhoController
     #only installed apps left are ones that arent in galleries -- uninstall them
     unless installed_apps.nil?
       installed_apps.each do |app|
-        if System::app_installed?(app.executable_id)
-          System::app_uninstall(app.executable_id)
+        if System::app_installed?(app.bundle_id)
+          System::app_uninstall(app.bundle_id)
         end
       end
     end

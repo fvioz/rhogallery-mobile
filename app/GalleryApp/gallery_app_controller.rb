@@ -31,8 +31,8 @@ class GalleryAppController < Rho::RhoController
 
     @AppGalleries.each do |app|
       build = app.select_build_link
-      if build && build.executable_id && build.executable_id != ""
-        if System::app_installed? build.executable_id
+      if build && build.bundle_id && build.bundle_id != ""
+        if System::app_installed? build.bundle_id
           app.downloading = "false"
           app.save
           app.state_install= "true"
@@ -95,8 +95,8 @@ class GalleryAppController < Rho::RhoController
       end
 
       #download app in s3 for correct platform
-      url = "itms-services://?action=download-manifest&url=#{url}"
       if platform == "APPLE"
+        url = "itms-services://?action=download-manifest&url=#{url}"
         System.open_url(url)
       else
         download_from_s3(url,@gallery_app.object)
@@ -120,7 +120,7 @@ class GalleryAppController < Rho::RhoController
     platform = System::get_property('platform')
     gallery_app = GalleryApp.find(@params['id'])
     if @params["status"] == "ok"
-      System.app_install(@params['file'])
+      System.applicationInstall(@params['file'])
       gallery_app.state_install = true
     else
       Alert.show_popup "Download Failed"
@@ -142,8 +142,8 @@ class GalleryAppController < Rho::RhoController
       redirect :action => :show,:query=>{:id=>@params['id'],:msg=>"Application is being uninstalled",:btn_install_clicked=>'true'}
     end
     
-    if System::app_installed?(@params['executable_id'])
-      System::app_uninstall(@params['executable_id'])
+    if System::app_installed?(@params['bundle_id'])
+      System::app_uninstall(@params['bundle_id'])
     end
   end
 
@@ -151,8 +151,9 @@ class GalleryAppController < Rho::RhoController
     begin
       token = "rhogallery_app"
       token = @params['security_token'] if @params['security_token'] && @params['security_token'] != ''
-      System.run_app(@params['executable_id'],"security_token="+token) if @params['executable_id']
+      System.runApplication(@params['bundle_id'],"security_token="+token) if @params['bundle_id']
     rescue Exception=>e
+      Alert.show_popup "Application failed to open. Check bundle ID is correct."
       puts "error running app #{e.message}"
     end  
     redirect :action => :index, :query => {:id => $gallery_id}

@@ -7,4 +7,8 @@ class Build
   enable :sync
   set :sync_priority, 100
   #add model specific code here
+
+  def url 
+    self.file_urls
+  end
 end

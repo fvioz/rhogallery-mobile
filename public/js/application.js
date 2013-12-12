@@ -18,12 +18,15 @@ $(function() {
   //all links handled here
   $('body').on("click",".custom-link",function(e) {
     e.preventDefault();
+    Pace.start();
     //e.stopPropagation();
     var back;
     var that = e.currentTarget;
     $.sidr('close', 'sidr-right');
     var href = $(that).attr("href");
-    $(".page").load(href);
+    $(".page").load(href,function(){
+      Pace.stop();
+    });
 
     //set back button if set in link
     set_back_btn(href,$(this));
@@ -48,6 +51,7 @@ $(function() {
 
   //review form
   $('.page').on("click",".custom-form",function(){
+    Pace.start();
     $(this).attr("disabled","disabled");
     var href = $("form").attr("action");
 
@@ -59,6 +63,7 @@ $(function() {
     var that = $(this);
     $.post(href,data,function(resp){
       $(".page").load(that.data("back"));
+      Pace.stop();
     });
     set_back_btn(href,$(this));
   });

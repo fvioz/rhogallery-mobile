@@ -6,12 +6,10 @@ class ReviewController < Rho::RhoController
 
   def new
     @id        = @params['id']
-    #client_id  = Rhom::Rhom::client_id
-    #puts "uuid is ************ #{client_id}"
-    @review = Review.find(:first,:conditions=>{'app_id'=>@id})
+    client_id  = Rho::System.phoneId
+    @review = Review.find(:first,:conditions=>{'app_id'=>@id,'client_id'=>client_id})
     if @review
       Review.current_review = Review.find(:all).first
-      #Review.current_review = Review.create({:client_id=>'testid',:stars=>2,:description=>"very good app",:title=>"great"}) unless Review.current_review
       render :action=>:edit
     else
       render
@@ -19,7 +17,7 @@ class ReviewController < Rho::RhoController
   end
 
   def create
-    @params.merge!({"client_id"=> Rhom::Rhom::client_id})
+    @params.merge!({"client_id"=> Rho::System.phoneId})
     Review.create(@params)
     render
   end
