@@ -20,18 +20,19 @@ class Settings
         WebView.navigate( url_for :action => :login )
         Alert.show_popup "Account not active. You have been logged out."
       end
-    when "Gallery"
-      Alert.show_status( "Synchronizing", "Galleries", Rho::RhoMessages.get_message('hide'))
-    when "BuildInstall" 
-      Alert.show_status( "Synchronizing", "BuildInstalls", Rho::RhoMessages.get_message('hide'))
-    when "GalleryApp"
-      Alert.show_status( "Synchronizing", "Applications", Rho::RhoMessages.get_message('hide'))
+    # when "Gallery"
+    #   Alert.show_status( "Synchronizing", "Galleries", Rho::RhoMessages.get_message('hide'))
+    # when "BuildInstall" 
+    #   Alert.show_status( "Synchronizing", "BuildInstalls", Rho::RhoMessages.get_message('hide'))
+    # when "GalleryApp"
+    #   Alert.show_status( "Synchronizing", "Applications", Rho::RhoMessages.get_message('hide'))
     when "Build"
-      Alert.show_status( "Synchronizing", "Builds", Rho::RhoMessages.get_message('hide'))
+      WebView.execute_js("Pace.stop();")
     end
   end
 
   def self.process_error(params)
+    WebView.execute_js("Pace.stop();")
     if params['server_errors'] && params['server_errors']['create-error']
       Rho::RhoConnectClient.on_sync_create_error(
         params['source_name'], params['server_errors']['create-error'].keys, :recreate )

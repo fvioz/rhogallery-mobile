@@ -22,6 +22,7 @@ class SettingsController < Rho::RhoController
     if errCode == 0
       # run sync if we were successful
       Rho::WebView.navigate Rho::Application.settingsPageURI
+      WebView.execute_js("Pace.start();")
       Rho::RhoConnectClient.doSync
     else
       if errCode == Rho::RhoError::ERR_CUSTOMSYNCSERVER
@@ -52,7 +53,8 @@ class SettingsController < Rho::RhoController
           settings[0].save
         else
           Settings.create(
-            :username => @params['email']
+            :username => @params['email'],
+            :uuid     => (0...8).map { (65 + rand(26)).chr }.join
           )
         end
         Rho::RhoConnectClient.login(@params['email'],@params['password'], (url_for :action => :login_callback) )
@@ -89,6 +91,7 @@ class SettingsController < Rho::RhoController
   end
   
   def do_sync
+    WebView.execute_js("Pace.start();")
     Rho::RhoConnectClient.doSync
     @msg =  "Sync has been triggered."
     redirect :action => :index, :query => {:msg => @msg}

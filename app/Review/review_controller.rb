@@ -6,7 +6,7 @@ class ReviewController < Rho::RhoController
 
   def new
     @id        = @params['id']
-    client_id  = Rho::System.phoneId
+    client_id  = Settings.find(:first).uuid
     @review = Review.find(:first,:conditions=>{'app_id'=>@id,'client_id'=>client_id})
     if @review
       Review.current_review = Review.find(:all).first
