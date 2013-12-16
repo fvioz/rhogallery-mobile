@@ -2,7 +2,10 @@
 # You can add more methods here
 class Settings
   include Rhom::PropertyBag
-
+  @@settings = false
+  class << self
+    attr_accessor :sync
+  end
 
   def self.process_ok(source_name)
     case source_name
@@ -13,26 +16,23 @@ class Settings
         WebView.navigate( url_for :action => :badversion )
       end
     when "Account"
-      account = Account.find(:first)
+      account = Account.find(:all).first
+      puts "account is #{account.inspect}"
       if account.active && account.active != "true"
         SyncEngine.stop_sync
         SyncEngine.logout
         WebView.navigate( url_for :action => :login )
         Alert.show_popup "Account not active. You have been logged out."
       end
-    # when "Gallery"
-    #   Alert.show_status( "Synchronizing", "Galleries", Rho::RhoMessages.get_message('hide'))
-    # when "BuildInstall" 
-    #   Alert.show_status( "Synchronizing", "BuildInstalls", Rho::RhoMessages.get_message('hide'))
-    # when "GalleryApp"
-    #   Alert.show_status( "Synchronizing", "Applications", Rho::RhoMessages.get_message('hide'))
     when "Build"
-      WebView.execute_js("Pace.stop();")
+      Settings.sync = false
+      WebView.execute_js("hide_sync();");
     end
   end
 
   def self.process_error(params)
-    WebView.execute_js("Pace.stop();")
+    Settings.sync = false
+    WebView.execute_js("hide_sync();")
     if params['server_errors'] && params['server_errors']['create-error']
       Rho::RhoConnectClient.on_sync_create_error(
         params['source_name'], params['server_errors']['create-error'].keys, :recreate )
@@ -54,11 +54,8 @@ class Settings
       Rho::RhoConnectClient.doSync
     elsif err_code == Rho::RhoError::ERR_UNATHORIZED
       msg = "Server credentials are expired"
-      Rho::WebView.navigate("/app/Settings/login?msg=#{msg}")
-        # url_for :action => :login, 
-        # :query => {:msg => ""} )                
+      Rho::WebView.navigate("/app/Settings/login?msg=#{msg}")             
     elsif err_code != Rho::RhoError::ERR_CUSTOMSYNCSERVER
-      #url_for :action => :err_sync, :query => { :msg => @msg }
       Rho::WebView.navigate("/app/Settings/err_sync?msg=#{@msg}")
     end    
   end

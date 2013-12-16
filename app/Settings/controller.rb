@@ -22,7 +22,7 @@ class SettingsController < Rho::RhoController
     if errCode == 0
       # run sync if we were successful
       Rho::WebView.navigate Rho::Application.settingsPageURI
-      WebView.execute_js("Pace.start();")
+      WebView.execute_js("show_sync();");
       Rho::RhoConnectClient.doSync
     else
       if errCode == Rho::RhoError::ERR_CUSTOMSYNCSERVER
@@ -33,7 +33,7 @@ class SettingsController < Rho::RhoController
         @msg = Rho::RhoError.new(errCode).message
       end
       
-      Rho::WebView.navigate ( url_for :action => :login, :query => {:msg => @msg} )
+      WebView.navigate( url_for :action => :login, :query => {:msg => @msg} )
     end  
   end
 
@@ -91,7 +91,7 @@ class SettingsController < Rho::RhoController
   end
   
   def do_sync
-    WebView.execute_js("Pace.start();")
+    Settings.sync = true
     Rho::RhoConnectClient.doSync
     @msg =  "Sync has been triggered."
     redirect :action => :index, :query => {:msg => @msg}

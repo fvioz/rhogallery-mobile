@@ -149,6 +149,14 @@ function check_timer() {
   setTimeout("check_timer()", 10000);
 }
 
+function show_sync(){
+  $('.sync-icon').show();
+}
+
+function hide_sync(){
+  $('.sync-icon').hide();
+}
+
 function pull_down_wrapper() {
   pullDownEl = document.getElementById('pullDown');
   pullDownOffset = pullDownEl.offsetHeight;

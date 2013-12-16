@@ -59,11 +59,6 @@ class GalleryAppController < Rho::RhoController
     if $first == false
       if num_installed != $num_installed
         should_update = 1
-        # if num_installed > $num_installed
-        #   Alert.show_popup "Application has been installed."
-        # else
-        #   Alert.show_popup "Application has been uninstalled."
-        # end 
         WebView.refresh
       end
     end

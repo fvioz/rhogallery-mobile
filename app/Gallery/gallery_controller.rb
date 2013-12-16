@@ -22,7 +22,7 @@ class GalleryController < Rho::RhoController
 
   def do_sync
     Rho::RhoConnectClient.doSync
-    WebView.refresh
+    WebView.navigate(url_for(:action => :index))
   end
 
   #GET /Gallery/{1}

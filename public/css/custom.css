@@ -37,6 +37,15 @@
   width:10%;
 }
 
+.sync-icon{
+  position:absolute;
+  top:18px;
+  right:15%;
+  z-index:9999999999;
+  animation:fade 1000ms infinite;
+  -webkit-animation:fade 1000ms infinite;
+}
+
 .custom-link{
   text-decoration:none;
   color:inherit;
