@@ -7,8 +7,8 @@ class GalleryAppController < Rho::RhoController
   # GET /GalleryApp
   def index
     @gallery    = Gallery.find(@params['id'])
-    $gallery_id = @params['id']
-    render :action=>'index'
+    Gallery.curr_gallery = @params['id']
+    render :action=>'index', :back => url_for(:controller=>:gallery,:action => :index, :id => @params['id'])
   end
 
   # GET /GalleryApp/{1}
@@ -17,7 +17,7 @@ class GalleryAppController < Rho::RhoController
     @review_hsh = @galleryapp.review_avg_hsh
     @review_avg = @galleryapp.review_avg
     if @galleryapp
-      render :action => :show, :back => url_for(:action => :index)
+      render :action => :show, :back => url_for(:action => :index,:id=>@params['id'])
     else
       redirect :action => :index
     end
@@ -38,7 +38,6 @@ class GalleryAppController < Rho::RhoController
           app.state_install= "true"
         else
           #if error occurred during download timeout spinner
-          #puts "before check is expired #{app.downloading == "true" and app.downloading and (Time.now.to_i > app.download_time.to_i)}****************************"
           if app.downloading == "true" and app.downloading and (Time.now.to_i > app.download_time.to_i)
             app.downloading = "false"
             app.download_time = ""
@@ -49,10 +48,8 @@ class GalleryAppController < Rho::RhoController
         end
       end
 
-      num_installed = num_installed + 1 if app.state_install != "false"
+      num_installed += 1 if app.state_install != "false"
     end
-
-    #puts "num_installed: #{num_installed}, $num_installed: #{$num_installed}"
     
     should_update = 0
 
@@ -66,8 +63,7 @@ class GalleryAppController < Rho::RhoController
     $first = false
     $num_installed = num_installed
 
-    
-    render :string => ::JSON.generate(should_update)
+    #render :string => ::JSON.generate(should_update)
   end
 
   def install_app
@@ -84,7 +80,7 @@ class GalleryAppController < Rho::RhoController
       render :action => :wait
     else
       if platform == 'APPLE' || platform == 'ANDROID'
-        redirect :action => :index, :query=>{:id => $gallery_id}
+        redirect :action => :index, :query=>{:id => Gallery.curr_gallery}
       else
         redirect :action => :show,:query=>{:id=>@params['id'],:msg=>"Application is being installed",:btn_install_clicked=>'true'}
       end
@@ -132,7 +128,7 @@ class GalleryAppController < Rho::RhoController
     @gallery_app.state_install="false"
 
     if System::get_property('platform') == 'APPLE' || System::get_property('platform') == 'ANDROID'
-      redirect :action => :index, :query=>{:id => $gallery_id}
+      redirect :action => :index, :query=>{:id => Gallery.curr_gallery}
     else
       redirect :action => :show,:query=>{:id=>@params['id'],:msg=>"Application is being uninstalled",:btn_install_clicked=>'true'}
     end
@@ -151,6 +147,6 @@ class GalleryAppController < Rho::RhoController
       Alert.show_popup "Application failed to open. Check bundle ID is correct."
       puts "error running app #{e.message}"
     end  
-    redirect :action => :index, :query => {:id => $gallery_id}
+    redirect :action => :index, :query => {:id => Gallery.curr_gallery}
   end
 end

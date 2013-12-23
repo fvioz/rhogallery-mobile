@@ -154,6 +154,7 @@ function show_sync(){
 }
 
 function hide_sync(){
+  $('.alert').hide("slow",function(){$('.alert').remove();});
   $('.sync-icon').hide();
 }
 

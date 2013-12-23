@@ -23,6 +23,7 @@ class SettingsController < Rho::RhoController
       # run sync if we were successful
       Rho::WebView.navigate Rho::Application.settingsPageURI
       WebView.execute_js("show_sync();");
+      Settings.sync = true
       Rho::RhoConnectClient.doSync
     else
       if errCode == Rho::RhoError::ERR_CUSTOMSYNCSERVER
@@ -84,6 +85,7 @@ class SettingsController < Rho::RhoController
   end
   
   def do_reset
+    Settings.sync = true
     Rhom::Rhom.database_full_reset
     Rho::RhoConnectClient.doSync
     @msg = "Database has been reset."
@@ -92,6 +94,7 @@ class SettingsController < Rho::RhoController
   
   def do_sync
     Settings.sync = true
+    WebView.execute_js("show_sync();");
     Rho::RhoConnectClient.doSync
     @msg =  "Sync has been triggered."
     redirect :action => :index, :query => {:msg => @msg}

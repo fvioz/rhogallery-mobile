@@ -7,6 +7,9 @@ class Gallery
   enable :sync
   set :sync_priority, 10
   #add model specific code here
+  class << self
+    attr_accessor :curr_gallery
+  end
 
   def gallery_apps
     ga = GalleryApp.find(:all,:conditions =>{:gallery_id =>self.object})

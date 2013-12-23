@@ -10,17 +10,18 @@ class GalleryController < Rho::RhoController
       Organization.curr_org = Organization.find(:first) unless Organization.curr_org
       @galleries = Gallery.find(:all,conditions:{"owner_id" => Organization.curr_org.object})
       if @galleries && @galleries.length == 1
-        redirect :controller => :GalleryApp, :action => :index, :query => {:id => @galleries[0].object}
+        redirect :controller => :GalleryApp, :action => :index, :query => {:id => @galleries[0].object}, :back => url_for(:action => :index)
       else
-        render
+        render :action=>:index, :back => url_for(:action => :index)
       end
     else
-      #remember to change to :login from do_login after testing period
       redirect :controller=>:Settings,:action => :do_login,:query=>{:msg=>nil}
     end
   end
 
   def do_sync
+    Settings.sync = true
+    WebView.execute_js("show_sync();");
     Rho::RhoConnectClient.doSync
     WebView.navigate(url_for(:action => :index))
   end
