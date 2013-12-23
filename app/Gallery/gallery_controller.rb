@@ -15,7 +15,7 @@ class GalleryController < Rho::RhoController
         render :action=>:index, :back => url_for(:action => :index)
       end
     else
-      redirect :controller=>:Settings,:action => :do_login,:query=>{:msg=>nil}
+      redirect :controller=>:Settings,:action => :login,:query=>{:msg=>nil}
     end
   end
 

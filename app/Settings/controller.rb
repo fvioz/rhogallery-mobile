@@ -39,13 +39,9 @@ class SettingsController < Rho::RhoController
   end
 
   def do_login
-    #@params['account']='msitechops'
-    #@params['login']= 'guest'
-    #@params['password']= 'cccfjwyy'
-
-    @params['email']= 'campbellmo79@gmail.com'
-    @params['password']= 'cZmEhD53'
-
+    #@params['email']= 'campbellmo79@gmail.com'
+    #@params['password']= 'cZmEhD53'
+    puts "params are: #{@params}"
     if @params['email'] and @params['password']
       begin
         settings = Settings.find(:all)
