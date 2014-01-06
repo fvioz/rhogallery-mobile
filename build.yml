@@ -21,7 +21,7 @@ symbian:
 android:
   version: 4.1.2
 
-extensions: ["rhoconnect-client",'digest','digest-md5']
+extensions: ["rhoconnect-client",'digest','digest-md5','mspec','fileutils']
   
 #app_type: rhoelements
 motorola_license: "S1LprMlZ`eF%ac7Bjg.:f^kfa;cnrOqIDl0KXttBcEw=T1E|`q0g`fr[/hQCS5E-`?n$Ha5=XCV0d4i@Jxo,2pg6I;VobN7[nxgv.vlhIUo[qq;:"
