@@ -1,0 +1,15 @@
+<div class='span12' style='margin-top:15%'>
+  <div class="subheader">
+    <h4 class='pull-left'>SpecRunner</h4>
+  </div>
+  <div id='wrapper'>
+    <% if @msg %>
+      <div class="alert alert-info"><%= @msg %></div>
+    <% end %>
+    <ul class='list-group'>
+      <li class='label label-default'>Total: <%=@count%></li>
+      <li class='label label-success'>Passed: <%=@count - @exc_count%></li>
+      <li class='label label-danger'>Failed: <%=@exc_count%></li>
+    </ul>
+  </div>
+</div>
