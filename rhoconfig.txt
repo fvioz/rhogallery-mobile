@@ -1,5 +1,5 @@
 # startup page for your application
-start_path = '/app/Organization'
+start_path = '/app/Gallery'
 version = 0.2
 # path to the options page (in this case handled by javascript)
 options_path = '/app/Settings'
@@ -49,13 +49,16 @@ LastVisitedPage = ''
 # for example: 'http://localhost:9292'
 
 #DEV
-#syncserver = 'http://192.168.150.101:9393'
-#rhogallery_webservice = 'http://192.168.150.101:9292'
+#syncserver = 'http://192.168.1.108:9393'
+#rhogallery_webservice = 'http://192.168.1.108:9292'
 
 #STAGING
-rhogallery_webservice = 'http://rhogallery-web-staging.herokuapp.com'
+rhogallery_webservice = 'https://rhogallery-web-staging.herokuapp.com'
 syncserver = 'http://rhogallery-sync-staging-next.herokuapp.com'
 
+#PROD
+#rhogallery_webservice = 'https://rhogallery-web-prod.herokuapp.com'
+#syncserver = 'http://rhogallery-sync-prod-next.herokuapp.com'
 
 sync_poll_interval=0
 
@@ -65,7 +68,7 @@ sync_poll_interval=0
 # open rhodes app in full screen mode
 # default 1 for Android up to Rhodes 2.2.5.
 # on all other platforms and on Android from Rhodes >2.2.5 default 0
-full_screen = 1
+#full_screen = 1
 
 # disable the Android page loading progress bar
 disable_loading_indication = 1

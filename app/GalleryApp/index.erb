@@ -23,11 +23,13 @@
               <a href="/app/GalleryApp/show?id=<%=galleryapp.object%>" class="custom-link" data-back="/app/GalleryApp/index?id=<%=@gallery.object%>">
                 <div class='info-grey'>
                   <div class='gallery-header'><%= galleryapp.name %></div>
-                  <span class="glyphicon glyphicon-star"></span>
-                  <span class="glyphicon glyphicon-star"></span>
-                  <span class="glyphicon glyphicon-star"></span>
-                  <span class="glyphicon glyphicon-star"></span>
-                  <span class="glyphicon glyphicon-star-empty"></span>&nbsp;(23)
+                  <% galleryapp.review_avg.times do |r|%>
+                    <span class="glyphicon glyphicon-star"></span>
+                  <%end%>
+                  <%(5- galleryapp.review_avg).times do |r|%>
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                  <%end%>
+                  &nbsp;(<%=galleryapp.reviews.count%>)<br/>
                 </div>
               </a>
             </td>
@@ -43,5 +45,5 @@
 
 <script type='text/javascript'>
   setTimeout(pull_down_wrapper, 200);
-  setTimeout("check_timer()", 10000); 
+  setTimeout(check_timer, 10000); 
 </script>

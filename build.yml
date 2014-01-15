@@ -1,6 +1,6 @@
 sdk: "/Users/lucascampbell-rossen/.rvm/gems/ruby-1.9.3-p448/gems/rhodes-4.0.0"
 sdkversion: 4.0.0
-name: rhogallery-mobile
+name: RhoGallery Mobile
 version: 1.0
 vendor: rhomobile
 build: debug
@@ -23,7 +23,5 @@ android:
 
 extensions: ["rhoconnect-client",'digest','digest-md5','mspec','fileutils']
   
-#app_type: rhoelements
-motorola_license: "S1LprMlZ`eF%ac7Bjg.:f^kfa;cnrOqIDl0KXttBcEw=T1E|`q0g`fr[/hQCS5E-`?n$Ha5=XCV0d4i@Jxo,2pg6I;VobN7[nxgv.vlhIUo[qq;:"
 capabilities:
 - non_motorola_device

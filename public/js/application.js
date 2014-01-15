@@ -19,18 +19,14 @@ $(function() {
   $('body').on("click",".custom-link",function(e) {
     e.preventDefault();
     Pace.start();
-    //e.stopPropagation();
     var back;
     var that = e.currentTarget;
     $.sidr('close', 'sidr-right');
     var href = $(that).attr("href");
-    $(".page").load(href,function(){
+    $(".page").load(href,function(resp){
       Pace.stop();
+      set_back_btn(href,$(that));
     });
-
-    //set back button if set in link
-    set_back_btn(href,$(this));
-    return false;
   });
 
   //app show page review/details toggle
@@ -64,28 +60,26 @@ $(function() {
     $.post(href,data,function(resp){
       $(".page").load(that.data("back"));
       Pace.stop();
+      set_back_btn(href,that);
     });
-    set_back_btn(href,$(this));
   });
 
   //review star clicks
   $('.page').on("click","[id^=star]",function(e){
-    //if(preventGhostClick(e) === true){
       var item = $(this).attr("id").replace("star","");
       var kls = $("#star"+item).attr("class");
       if(kls.match(/empty/) === null){
         kls = kls.replace("glyphicon-star","glyphicon-star-empty");
-        for(var i=parseInt(item);i <= 5;i++){
+        for(var i=parseInt(item,10);i <= 5;i++){
           $("#star"+i).attr("class",kls);
         }
       }
       else{
         kls = kls.replace("glyphicon-star-empty","glyphicon-star");
-        for(var i=parseInt(item);i >= 0;i--){
-          $("#star"+i).attr("class",kls);
+        for(var j=parseInt(item,10);j >= 0;j--){
+          $("#star"+j).attr("class",kls);
         }
       }
-    //}
   });
 
   $('#right-menu').sidr({
@@ -100,8 +94,7 @@ $(window).swipe({
   },
   swipeLeft:function(event,direction,distance,duration,fingerCount){
     $.sidr('open', 'sidr-right');
-  },
-  threshold:0
+  }
 });
 
 function validate_length(description,title){
@@ -121,6 +114,8 @@ function validate_length(description,title){
 
 function set_back_btn(href,n){
   if((n.data("back") !== undefined && n.data("back").length > 3) || n.attr("id") == "back-btn"){
+    if(n.data("link") !== undefined)
+      href = n.data("link");
     if(backHash[href] !== undefined){
       back = backHash[href];
       delete backHash[href];
@@ -140,13 +135,11 @@ function pullDownAction () {
   scroller.refresh();   // Remember to refresh when contents are loaded (ie: on ajax completion)
 }
 
-function check_installed_apps() {
-  $.get('/app/GalleryApp/check_installed_apps');
-}
 
 function check_timer() {
-  check_installed_apps();
-  setTimeout("check_timer()", 10000);
+  $.get('/app/GalleryApp/check_installed_apps',function(){
+    setTimeout(check_timer, 10000);
+  });
 }
 
 function show_sync(){
