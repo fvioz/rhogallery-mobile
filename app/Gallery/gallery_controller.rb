@@ -8,11 +8,11 @@ class GalleryController < Rho::RhoController
   def index
     if SyncEngine::logged_in > 0
       Organization.curr_org = Organization.find(:first) unless Organization.curr_org
-      @galleries = Gallery.find(:all,conditions:{"owner_id" => Organization.curr_org.object})
+      @galleries = Gallery.find(:all,:conditions=>{"owner_id" => Organization.curr_org.object})
       if @galleries && @galleries.length == 1
-        redirect :controller => :GalleryApp, :action => :index, :query => {:id => @galleries[0].object}, :back => url_for(:action => :index)
+        redirect :controller => :GalleryApp, :action => :index, :query => {:id => @galleries[0].object}
       else
-        render :action=>:index, :back => url_for(:action => :index)
+        render :action=>:index, :back => "/app/Organization"
       end
     else
       redirect :controller=>:Settings,:action => :login,:query=>{:msg=>nil}

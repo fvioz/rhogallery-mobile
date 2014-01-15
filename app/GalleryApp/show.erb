@@ -1,4 +1,4 @@
-<div id="wrapper" style='top:50px;'>
+<div id="wrapper" style='top:50px;min-height:100%'>
   <div id="scroller">
     <div class='span12'>
       <%url = galleryapp_url(@galleryapp)%>
@@ -8,13 +8,12 @@
           <td style='vertical-align:middle'>
             <img src="<%=@galleryapp.logo_url%>" class="img-rounded" height:"50" width="50">
           <td>
-          
           <td>
             <%=@galleryapp.name%><br/>
-            <%@review_avg.times do |r|%>
+            <% @galleryapp.review_avg.times do |r|%>
               <span class="glyphicon glyphicon-star"></span>
             <%end%>
-            <%(5-@review_avg).times do |r|%>
+            <%(5- @galleryapp.review_avg).times do |r|%>
               <span class="glyphicon glyphicon-star-empty"></span>
             <%end%>
             &nbsp;(<%=@galleryapp.reviews.count%>)<br/>
@@ -46,7 +45,7 @@
                   <%end%>
                 </td>
                 <td>
-                  <%=@review_hsh[stars]%>
+                  <%=@galleryapp.review_avg_hsh[stars]%>
                 </td>
               </tr>
             <%end%>

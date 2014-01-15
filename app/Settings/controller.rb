@@ -49,10 +49,10 @@ class SettingsController < Rho::RhoController
           settings[0].email = @params['email']
           settings[0].save
         else
-          Settings.create(
+         settings = Settings.create({
             :username => @params['email'],
             :uuid     => (0...8).map { (65 + rand(26)).chr }.join
-          )
+          })
         end
         Rho::RhoConnectClient.login(@params['email'],@params['password'], (url_for :action => :login_callback) )
         @response['headers']['Wait-Page'] = 'true'
@@ -104,17 +104,14 @@ class SettingsController < Rho::RhoController
     #Rho::Notification.showStatus( "Status", "#{@params['source_name']} : #{status}", Rho::RhoMessages.get_message('hide'))
     if status == "ok"
       Settings.process_ok(@params['source_name'])
-    elsif status == "in_progress"   
-      # do nothing
     elsif status == "complete"
-      Alert.hide_popup
       gallery_apps = GalleryApp.find(:all)
       installed_apps = BuildInstall.find(:all)
       
       installed_apps.delete_if do |app|
         delete = false
         gallery_apps.each do |gapp|
-          delete = true if gapp.object == app.app_id
+          delete = true if gapp.object == app.build.app_id
         end
         delete
       end

@@ -49,8 +49,7 @@ class GalleryApp
         :conditions => conditions,
         :order => :version
       )
-      #@build = (build and build.size > 0) ? build.last : nil
-      @build.extract_build_url if @build
+      #@build.extract_build_url if @build
 
     rescue Exception=>e
       puts "exception **************** #{e.message}"

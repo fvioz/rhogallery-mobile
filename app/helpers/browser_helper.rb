@@ -28,6 +28,8 @@ module BrowserHelper
         url = "/app/GalleryApp/install_app?url_install=#{Rho::RhoSupport.url_encode(galleryapp.select_build_link.url)}&id=#{galleryapp.object}"
       when "maybe"
         url = "/app/GalleryApp/uninstall_app?bundle_id=#{Rho::RhoSupport.url_encode(galleryapp.select_build_link.bundle_id)}&id=#{galleryapp.object}"
+      else
+        url = "/app/GalleryApp/install_app?url_install=#{Rho::RhoSupport.url_encode(galleryapp.select_build_link.url)}&id=#{galleryapp.object}"
       end
     end
     url
@@ -50,6 +52,9 @@ module BrowserHelper
       when "maybe"
         btn += "btn-danger "
         name = "uninstall"
+      else
+        btn += "btn-default "
+        name = "install"
       end
     end
     btn += "btn-xs"

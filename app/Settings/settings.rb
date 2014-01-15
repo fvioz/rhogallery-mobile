@@ -15,16 +15,8 @@ class Settings
         SyncEngine.stop_sync
         WebView.navigate( url_for :action => :badversion )
       end
-    when "Account"
-      account = Account.find(:all).first
-      puts "account is #{account.inspect}"
-      if account.active && account.active != "true"
-        SyncEngine.stop_sync
-        SyncEngine.logout
-        WebView.navigate( url_for :action => :login )
-        Alert.show_popup "Account not active. You have been logged out."
-      end
-    when "Build"
+    #build is last synced resource, hide sync indicators after
+    when "BuildInstall"
       Settings.sync = false
       WebView.execute_js("hide_sync();");
     end

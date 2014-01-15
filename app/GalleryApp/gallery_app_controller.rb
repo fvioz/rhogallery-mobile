@@ -8,14 +8,14 @@ class GalleryAppController < Rho::RhoController
   def index
     @gallery    = Gallery.find(@params['id'])
     Gallery.curr_gallery = @params['id']
-    render :action=>'index', :back => url_for(:controller=>:gallery,:action => :index, :id => @params['id'])
+    render :action=>'index', :back => "/app/Gallery?id=#{@params['id']}"
   end
 
   # GET /GalleryApp/{1}
   def show
     @galleryapp = GalleryApp.find(@params['id'])
-    @review_hsh = @galleryapp.review_avg_hsh
-    @review_avg = @galleryapp.review_avg
+    @galleryapp.review_avg_hsh
+    @galleryapp.review_avg
     if @galleryapp
       render :action => :show, :back => url_for(:action => :index,:id=>@params['id'])
     else
@@ -47,23 +47,20 @@ class GalleryAppController < Rho::RhoController
           app.state_install= "false"
         end
       end
-
-      num_installed += 1 if app.state_install != "false"
+      #num_installed += 1 if app.state_install != "false"
     end
     
-    should_update = 0
+    # should_update = 0
 
-    if $first == false
-      if num_installed != $num_installed
-        should_update = 1
-        WebView.refresh
-      end
-    end
+    # if $first == false
+    #   if num_installed != $num_installed
+    #     should_update = 1
+    #     WebView.refresh
+    #   end
+    # end
     
-    $first = false
-    $num_installed = num_installed
-
-    #render :string => ::JSON.generate(should_update)
+    # $first = false
+    # $num_installed = num_installed
   end
 
   def install_app
