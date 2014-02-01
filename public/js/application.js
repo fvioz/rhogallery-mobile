@@ -33,7 +33,7 @@ $(function() {
       $("#back-btn").hide();
     else
       $("#back-btn").show();
-    alert("href is:" + href);
+    //alert("href is:" + href);
     $(".page").load(href,function(resp){
       Pace.stop();
     });
