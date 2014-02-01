@@ -48,7 +48,7 @@ class Settings
       msg = "Server credentials are expired"
       Rho::WebView.navigate("/app/Settings/login?msg=#{msg}")             
     elsif err_code != Rho::RhoError::ERR_CUSTOMSYNCSERVER
-      Rho::WebView.navigate("/app/Settings/err_sync?msg=#{@msg}")
+      Rho::WebView.navigate("/app/Settings/login?msg=#{@msg}")
     end    
   end
 end

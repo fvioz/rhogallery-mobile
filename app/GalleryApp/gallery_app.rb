@@ -91,6 +91,7 @@ class GalleryApp
         :build_id => build.object
       }
     )
+    puts "install is *********************** #{install}"
     if build && build.bundle_id && build.bundle_id != ""
       if System::app_installed? build.bundle_id
         installed = "true"

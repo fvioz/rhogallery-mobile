@@ -6,8 +6,9 @@ class GalleryAppController < Rho::RhoController
 
   # GET /GalleryApp
   def index
-    @gallery    = Gallery.find(@params['id'])
-    Gallery.curr_gallery = @params['id']
+    id = @params['id'] || Gallery.curr_gallery
+    @gallery    = Gallery.find(id)
+    Gallery.curr_gallery = id
     render :action=>'index', :back => "/app/Gallery?id=#{@params['id']}"
   end
 
@@ -87,7 +88,8 @@ class GalleryAppController < Rho::RhoController
         url = "itms-services://?action=download-manifest&url=#{url}"
         System.open_url(url)
       else
-        download_from_s3(url,@gallery_app.object)
+        puts "downloading s3 url: #{url}"
+        download_from_s3(url.gsub(" ","%20"),@gallery_app.object)
       end
     end
   end
@@ -96,7 +98,7 @@ class GalleryAppController < Rho::RhoController
     filename = url.split("/").last
     dwnldpath = Rho::RhoFile.join(Rho::Application.userFolder,filename)
     filepath = "file://#{dwnldpath}"
-
+  
     downloadfileProps = Hash.new
     downloadfileProps["url"]=url
     downloadfileProps["filename"] = dwnldpath
@@ -124,15 +126,14 @@ class GalleryAppController < Rho::RhoController
     @gallery_app = GalleryApp.find(@params['id'])
     @gallery_app.state_install="false"
 
-    if System::get_property('platform') == 'APPLE' || System::get_property('platform') == 'ANDROID'
-      redirect :action => :index, :query=>{:id => Gallery.curr_gallery}
-    else
-      redirect :action => :show,:query=>{:id=>@params['id'],:msg=>"Application is being uninstalled",:btn_install_clicked=>'true'}
-    end
+    # if System::get_property('platform') == 'APPLE' || System::get_property('platform') == 'ANDROID'
+    #   redirect :action => :show, :query=>{:id => Gallery.curr_gallery}
+    # else
+    #   redirect :action => :show,:query=>{:id=>@params['id'],:msg=>"Application is being uninstalled",:btn_install_clicked=>'true'}
+    # end
     
-    if System::app_installed?(@params['bundle_id'])
-      System::app_uninstall(@params['bundle_id'])
-    end
+    System::app_uninstall(@params['bundle_id']) if System::app_installed?(@params['bundle_id'])
+    redirect :action => :show, :query=>{:id => @params['id']}
   end
 
   def run_app

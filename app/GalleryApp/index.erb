@@ -1,7 +1,7 @@
 <div class='span12'>
   <div class="subheader">
     <h4 class='pull-left'>
-      <img src="<%=@gallery.logo_url%>" class="img-rounded" height:"25" width="25">
+      <img src="<%=@gallery.logo_url%>" class="img-rounded" height="25" width="25">
       <%=@gallery.name%>
     </h4>
   </div>
@@ -17,10 +17,12 @@
           <%btn_kls,btn_name = btn_type(galleryapp)%>
           <tr>
             <td class='side-grey'>
-              <img src="<%=galleryapp.logo_url%>" class="img-rounded" height:"50" width="50" />
+              <a href="/app/GalleryApp/show?id=<%=galleryapp.object%>" class="custom-link">
+                <img src="<%=galleryapp.logo_url%>" class="img-rounded" height="50" width="50" />
+              </a>
             </td>
             <td class='list-row-desc'>
-              <a href="/app/GalleryApp/show?id=<%=galleryapp.object%>" class="custom-link" data-back="/app/GalleryApp/index?id=<%=@gallery.object%>">
+              <a href="/app/GalleryApp/show?id=<%=galleryapp.object%>" class="custom-link">
                 <div class='info-grey'>
                   <div class='gallery-header'><%= galleryapp.name %></div>
                   <% galleryapp.review_avg.times do |r|%>
@@ -44,6 +46,7 @@
 </div>
 
 <script type='text/javascript'>
-  setTimeout(pull_down_wrapper, 200);
+  //setTimeout(pull_down_wrapper, 200);
+  pull_down_wrapper();
   setTimeout(check_timer, 10000); 
 </script>

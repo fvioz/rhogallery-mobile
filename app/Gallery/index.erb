@@ -12,10 +12,12 @@
         <% @galleries.each do |gallery| %> 
           <tr>
             <td class='side-grey'>
-              <img src="<%=gallery.logo_url%>" class="img-rounded" height:"50" width="50">
+              <a href="/app/GalleryApp/index?id=<%=gallery.object%>" class="custom-link">
+                <img src="<%=gallery.logo_url%>" class="img-rounded" height="50" width="50">
+              </a>
             </td>
             <td class='list-row-desc'>
-              <a href="/app/GalleryApp/index?id=<%=gallery.object%>" class="custom-link" data-back="/app/Gallery">
+              <a href="/app/GalleryApp/index?id=<%=gallery.object%>" class="custom-link">
                 <div class='info-grey'>
                   <span class='gallery-header'><%= gallery.name %></span><br/>
                   <p class='gallery-description'><%= gallery.description%></p>

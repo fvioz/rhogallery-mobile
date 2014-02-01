@@ -1,4 +1,4 @@
-<div id="wrapper" style='top:50px;min-height:100%'>
+<div id="wrapper" style='top:50px;'>
   <div id="scroller">
     <div class='span12'>
       <%url = galleryapp_url(@galleryapp)%>
@@ -6,7 +6,7 @@
       <table class='table showheader' WIDTH='100%'>
         <tr>
           <td style='vertical-align:middle'>
-            <img src="<%=@galleryapp.logo_url%>" class="img-rounded" height:"50" width="50">
+            <img src="<%=@galleryapp.logo_url%>" class="img-rounded" height="50" width="50">
           <td>
           <td>
             <%=@galleryapp.name%><br/>
@@ -26,7 +26,7 @@
       </table>
       <div class='span12'>
         <div class="btn-group btn-group-justified" style='margin-bottom:10px'>
-          <a id='detail-tab' class="btn btn-default active toggleShow">Details</a>
+          <a class="btn btn-default active toggleShow">Details</a>
           <a class="btn btn-default toggleShow">Reviews</a>
         </div>
         <div class='details'>
@@ -50,7 +50,7 @@
               </tr>
             <%end%>
           </table>
-          <a class='btn btn-default custom-link' href='/app/Review/new?id=<%=@galleryapp.object%>' data-back='/app/GalleryApp/show?id=<%=@galleryapp.object%>' style='margin:5px 0 5px 0'>Write Review</a>
+          <a class='btn btn-default custom-link' href='/app/Review/new?id=<%=@galleryapp.object%>' style='margin:5px 0 5px 0'>Write Review</a>
           <div class="list-group">
             <%@galleryapp.reviews.each do |review|%>
               <div class='list-group-item'>
@@ -71,5 +71,5 @@
   </div>
 </div>
 <script type='text/javascript'>
-  basic_wrapper();
+  setTimeout(basic_wrapper, 400);
 </script>

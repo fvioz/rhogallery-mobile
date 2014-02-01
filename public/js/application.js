@@ -19,13 +19,23 @@ $(function() {
   $('body').on("click",".custom-link",function(e) {
     e.preventDefault();
     Pace.start();
-    var back;
+    //var back;
     var that = e.currentTarget;
     $.sidr('close', 'sidr-right');
     var href = $(that).attr("href");
+
+    if($(that).attr('id') !== undefined && $(that).attr('id') == 'back-btn')
+      href = get_back_href(href);
+    
+    $("#back-btn").attr("href",href);
+    
+    if(href == "/app/Organization")
+      $("#back-btn").hide();
+    else
+      $("#back-btn").show();
+    alert("href is:" + href);
     $(".page").load(href,function(resp){
       Pace.stop();
-      set_back_btn(href,$(that));
     });
   });
 
@@ -60,7 +70,6 @@ $(function() {
     $.post(href,data,function(resp){
       $(".page").load(that.data("back"));
       Pace.stop();
-      set_back_btn(href,that);
     });
   });
 
@@ -112,20 +121,19 @@ function validate_length(description,title){
   return res;
 }
 
-function set_back_btn(href,n){
-  if((n.data("back") !== undefined && n.data("back").length > 3) || n.attr("id") == "back-btn"){
-    if(n.data("link") !== undefined)
-      href = n.data("link");
-    if(backHash[href] !== undefined){
-      back = backHash[href];
-      delete backHash[href];
-    }
-    else{
-      back = n.data("back");
-      backHash[href] = back;
-    }
-    //$("#rho-title").html(href);
-    $("#back-btn").attr("href",back);
+function get_back_href(href){
+  switch(true)
+  {
+  case /GalleryApp\/index/.test(href):
+    return "/app/Gallery";
+  case /GalleryApp\/show/.test(href):
+    return "/app/GalleryApp/index";
+  case /Gallery/.test(href):
+    return "/app/Organization";
+  case /Organization\/set_org/.test(href):
+    return "/app/Organization";
+  default:
+    return "/app/Gallery";
   }
 }
 
@@ -153,8 +161,7 @@ function hide_sync(){
 
 function pull_down_wrapper() {
   pullDownEl = document.getElementById('pullDown');
-  pullDownOffset = pullDownEl.offsetHeight;
- 
+  pullDownOffset = 40;
   scroller = new iScroll('wrapper', {
     useTransition: true,
     topOffset: pullDownOffset,
