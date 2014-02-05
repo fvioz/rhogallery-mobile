@@ -62,7 +62,7 @@ syncserver = 'http://rhogallery-sync-staging-next.herokuapp.com'
 
 sync_poll_interval=0
 
-# geo location inactivity timeout (in seconds)
+#geo location inactivity timeout (in seconds)
 #geo_location_inactivity_timeout = 30
 
 # open rhodes app in full screen mode

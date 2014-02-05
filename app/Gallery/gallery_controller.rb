@@ -15,7 +15,7 @@ class GalleryController < Rho::RhoController
         render :action=>:index, :back => "/app/Organization"
       end
     else
-      redirect :controller=>:Settings,:action => :login
+      redirect :controller=>:Settings,:action => :login, :query=>{:msg=>nil}
     end
   end
 
