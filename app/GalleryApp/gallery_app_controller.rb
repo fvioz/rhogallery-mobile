@@ -28,8 +28,6 @@ class GalleryAppController < Rho::RhoController
     @AppGalleries = GalleryApp.find(:all)      
     @AppGalleries.reject! { |app| app.select_build_link.nil? }
     
-    num_installed = 0
-
     @AppGalleries.each do |app|
       build = app.select_build_link
       if build && build.bundle_id && build.bundle_id != ""
@@ -38,30 +36,17 @@ class GalleryAppController < Rho::RhoController
           app.save
           app.state_install= "true"
         else
-          #if error occurred during download timeout spinner
+          #if error occurred during download toggle install
           if app.downloading == "true" and app.downloading and (Time.now.to_i > app.download_time.to_i)
             app.downloading = "false"
             app.download_time = ""
             app.save
-            WebView.refresh
+            WebView.execute_js("load_page('/app/GalleryApp/index');");
           end
           app.state_install= "false"
         end
       end
-      #num_installed += 1 if app.state_install != "false"
     end
-    
-    # should_update = 0
-
-    # if $first == false
-    #   if num_installed != $num_installed
-    #     should_update = 1
-    #     WebView.refresh
-    #   end
-    # end
-    
-    # $first = false
-    # $num_installed = num_installed
   end
 
   def install_app
@@ -107,7 +92,7 @@ class GalleryAppController < Rho::RhoController
   end
 
   def download_file_callback
-    platform = System::get_property('platform')
+    #platform = System::get_property('platform')
     gallery_app = GalleryApp.find(@params['id'])
     if @params["status"] == "ok"
       System.applicationInstall(@params['file'])
@@ -118,22 +103,17 @@ class GalleryAppController < Rho::RhoController
     gallery_app.download_time = ""
     gallery_app.downloading = "false"
     gallery_app.save
-    WebView.refresh()
+    WebView.execute_js("load_page('/app/GalleryApp/index');");
   end
 
   
   def uninstall_app
     @gallery_app = GalleryApp.find(@params['id'])
     @gallery_app.state_install="false"
-
-    # if System::get_property('platform') == 'APPLE' || System::get_property('platform') == 'ANDROID'
-    #   redirect :action => :show, :query=>{:id => Gallery.curr_gallery}
-    # else
-    #   redirect :action => :show,:query=>{:id=>@params['id'],:msg=>"Application is being uninstalled",:btn_install_clicked=>'true'}
-    # end
     
-    System::app_uninstall(@params['bundle_id']) if System::app_installed?(@params['bundle_id'])
-    redirect :action => :show, :query=>{:id => @params['id']}
+    System::applicationUninstall(@params['bundle_id']) if System::app_installed?(@params['bundle_id'])
+    url = "/app/GalleryApp/show?id=#{@params['id']}"
+    WebView.execute_js("load_page('#{url}');");
   end
 
   def run_app

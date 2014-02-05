@@ -4,13 +4,12 @@ $(function() {
   //To ignore fastclick for double tab events use 
   //<a class="needsclick">Ignored by FastClick</a>
   FastClick.attach(document.body);
-
   //iscroll variable
   scroller="";
   var pullDownEl,
   pullDownOffset,
   generatedCount = 0;
-
+  
   window.addEventListener("orientationchange", function() {
     scroller.refresh();
   }, false);
@@ -121,9 +120,17 @@ function validate_length(description,title){
   return res;
 }
 
+function load_page(href){
+  $(".page").load(href);
+}
+
 function get_back_href(href){
   switch(true)
   {
+  case /uninstall_app/.test(href):
+    return "/app/GalleryApp/index";
+  case /Review/.test(href):
+    return "/app/GalleryApp/index";
   case /GalleryApp\/index/.test(href):
     return "/app/Gallery";
   case /GalleryApp\/show/.test(href):

@@ -17,9 +17,9 @@
               <span class="glyphicon glyphicon-star-empty"></span>
             <%end%>
             &nbsp;(<%=@galleryapp.reviews.count%>)<br/>
-            <a href="<%=url%>" class="<%=btn_kls%>"><%=btn_name%></a>
+            <a href="<%=url%>" class="<%=btn_kls%> custom-link"><%=btn_name%></a>
             <%if btn_name == 'open'%>
-              <a href="/app/GalleryApp/uninstall_app?bundle_id=<%=Rho::RhoSupport.url_encode(@galleryapp.select_build_link.bundle_id)%>&id=<%=@galleryapp.object%>" class='btn btn-danger btn-xs'>uninstall</a>
+              <a href="/app/GalleryApp/uninstall_app?bundle_id=<%=Rho::RhoSupport.url_encode(@galleryapp.select_build_link.bundle_id)%>&id=<%=@galleryapp.object%>" class='btn btn-danger btn-xs custom-link'>uninstall</a>
             <%end%>
           </td>
         </tr>
