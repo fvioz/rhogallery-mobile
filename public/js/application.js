@@ -72,6 +72,18 @@ $(function() {
     });
   });
 
+    //review form
+  $('.page').on("click",".login-form",function(){
+    Pace.start();
+    $(this).attr("disabled","disabled");
+    var href = $("form").attr("action");
+
+    var data = $("form").serialize();
+    $.post(href,data,function(resp){
+      Pace.stop();
+    });
+  });
+
   //review star clicks
   $('.page').on("click","[id^=star]",function(e){
       var item = $(this).attr("id").replace("star","");

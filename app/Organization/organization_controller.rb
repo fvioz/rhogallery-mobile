@@ -10,8 +10,7 @@ class OrganizationController < Rho::RhoController
       @organizations = Organization.find(:all)
       render :back => '/app'
     else
-      #remember to change to :login from do_login after testing period
-      redirect :controller=>:Settings,:action => :do_login,:query=>{:msg=>nil}
+      redirect :controller=>:Settings,:action => :login,:query=>{:msg=>nil}
     end
   end
 

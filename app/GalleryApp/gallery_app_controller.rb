@@ -74,7 +74,7 @@ class GalleryAppController < Rho::RhoController
         System.open_url(url)
       else
         puts "downloading s3 url: #{url}"
-        download_from_s3(url.gsub(" ","%20"),@gallery_app.object)
+        download_from_s3(url,@gallery_app.object)
       end
     end
   end
