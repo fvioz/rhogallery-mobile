@@ -16,12 +16,13 @@ module BrowserHelper
     "checked=\"yes\"" if option_value == object_value
   end
 
-  def galleryapp_url(galleryapp)
+  def galleryapp_url(galleryapp,force_uninstall=false)
     url = ""
     if galleryapp.downloading == "true"
       url = "#"
     else
-      case galleryapp.state_install
+      state_install = force_uninstall == "true" ? "false" : galleryapp.state_install 
+      case state_install
       when "true"
         url = "/app/GalleryApp/run_app?security_token=#{Rho::RhoSupport.url_encode(galleryapp.select_build_link.security_token)}&bundle_id=#{Rho::RhoSupport.url_encode(galleryapp.select_build_link.bundle_id)}&id=#{galleryapp.object}"
       when "false"
@@ -35,8 +36,8 @@ module BrowserHelper
     url
   end
 
-  def btn_type(galleryapp)
-    state_install = galleryapp.state_install
+  def btn_type(galleryapp,force_uninstall=false)
+    state_install = force_uninstall == "true" ? "false" : galleryapp.state_install
     btn = "btn "
     if galleryapp.downloading == "true"
       btn += "btn-warning blink "
