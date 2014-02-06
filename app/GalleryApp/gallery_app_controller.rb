@@ -15,6 +15,7 @@ class GalleryAppController < Rho::RhoController
   # GET /GalleryApp/{1}
   def show
     @galleryapp = GalleryApp.find(@params['id'])
+    @force_uninstall = @params['uninstall']
     @galleryapp.review_avg_hsh
     @galleryapp.review_avg
     if @galleryapp
@@ -112,7 +113,7 @@ class GalleryAppController < Rho::RhoController
     @gallery_app.state_install="false"
     
     System::applicationUninstall(@params['bundle_id']) if System::app_installed?(@params['bundle_id'])
-    url = "/app/GalleryApp/show?id=#{@params['id']}"
+    url = "/app/GalleryApp/show?id=#{@params['id']}&uninstall=true"
     WebView.execute_js("load_page('#{url}');");
   end
 

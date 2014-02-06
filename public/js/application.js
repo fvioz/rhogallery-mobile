@@ -61,8 +61,10 @@ $(function() {
     var href = $("form").attr("action");
 
     //return if validation fails
-    if(validate_length($("#review-desc").val(),$("#review-title").val()) === false)
+    if(validate_length($("#review-desc").val(),$("#review-title").val()) === false){
+      $(this).removeAttr("disabled","disabled");
       return false;
+    }
 
     var data = $("form").serialize() + "&stars=" + $(".glyphicon-star").length;
     var that = $(this);
@@ -121,12 +123,10 @@ function validate_length(description,title){
   var res = true;
   if(description.length < 2){
     $("#review-desc").css("border","2px solid red");
-    $("#review-desc").val("Please enter a valid description");
     res = false;
   }
   if(title.length < 2){
     $("#review-title").css("border","2px solid red");
-    $("#review-title").val("Please enter a valid title");
     res = false;
   }
   return res;
