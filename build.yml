@@ -25,6 +25,6 @@ extensions: ["rhoconnect-client",'digest','digest-md5','mspec','fileutils']
 
 paths:
   extensions:
-     - "/Users/lucascampbell-rossen/.rvm/gems/ruby-1.9.3-p448/gems/rhoconnect-client-4.0.0/ext/"
+     - "~/.rvm/gems/ruby-1.9.3-p448/gems/rhoconnect-client-4.0.0/ext/"
 capabilities:
 - non_motorola_device
