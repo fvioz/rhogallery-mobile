@@ -37,7 +37,6 @@ class Settings
     
     err_code = params['error_code'].to_i
     rho_error = Rho::RhoError.new(err_code)
-    
     @msg = params['error_message'] if err_code == Rho::RhoError::ERR_CUSTOMSYNCSERVER
     @msg = rho_error.message unless @msg && @msg.length > 0   
 

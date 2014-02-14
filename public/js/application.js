@@ -11,7 +11,8 @@ $(function() {
   generatedCount = 0;
   
   window.addEventListener("orientationchange", function() {
-    scroller.refresh();
+    if(scroller !== "")
+      scroller.refresh();
   }, false);
   
   //all links handled here

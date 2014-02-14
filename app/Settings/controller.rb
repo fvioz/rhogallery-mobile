@@ -17,7 +17,6 @@ class SettingsController < Rho::RhoController
   end
 
   def login_callback
-    puts "params are #{@params.inspect}"
     errCode = @params['error_code'].to_i
     if errCode == 0
       # run sync if we were successful
@@ -26,6 +25,7 @@ class SettingsController < Rho::RhoController
       Settings.sync = true
       Rho::RhoConnectClient.doSync
     else
+      puts "error message is #{@params['error_message']}"
       if errCode == Rho::RhoError::ERR_CUSTOMSYNCSERVER
         @msg = @params['error_message']
       end
@@ -34,6 +34,7 @@ class SettingsController < Rho::RhoController
         @msg = Rho::RhoError.new(errCode).message
       end
       
+      @msg << " Please ensure the device has the correct date and timezone."
       WebView.navigate( url_for :action => :login, :query => {:msg => @msg} )
     end  
   end
