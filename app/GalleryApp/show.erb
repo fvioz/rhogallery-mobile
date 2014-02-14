@@ -10,6 +10,7 @@
           <td>
           <td>
             <%=@galleryapp.name%><br/>
+            <div class='gallery-company'><%=@galleryapp.company_name %></div>
             <% @galleryapp.review_avg.times do |r|%>
               <span class="glyphicon glyphicon-star"></span>
             <%end%>

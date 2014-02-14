@@ -25,6 +25,7 @@
               <a href="/app/GalleryApp/show?id=<%=galleryapp.object%>" class="custom-link">
                 <div class='info-grey'>
                   <div class='gallery-header'><%= galleryapp.name %></div>
+                  <div class='gallery-company'><%= galleryapp.company_name %></div>
                   <% galleryapp.review_avg.times do |r|%>
                     <span class="glyphicon glyphicon-star"></span>
                   <%end%>

@@ -19,12 +19,16 @@
 
 .gallery-header{
   font-weight:bold;
-  height:40px;
+  height:20px;
   overflow:hidden;
 }
 
 .gallery-description{
   height:100%;
+}
+
+.gallery-company{
+  font-size: 10px;
 }
 
 .list-row-desc{

@@ -6,6 +6,7 @@ class GalleryController < Rho::RhoController
 
   # GET /Gallery
   def index
+    puts "inside gallery index"
     if SyncEngine::logged_in > 0
       Organization.curr_org = Organization.find(:first) unless Organization.curr_org
       @galleries = Gallery.find(:all,:conditions=>{"owner_id" => Organization.curr_org.object})
