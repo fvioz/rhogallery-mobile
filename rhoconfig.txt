@@ -4,6 +4,10 @@ version = 0.2
 # path to the options page (in this case handled by javascript)
 options_path = '/app/Settings'
 
+#add credentials for automatic login of app
+email=""
+password=""
+
 # location of bundle url (i.e. from rhohub.com); used by desktop win32 simulator
 rhobundle_zip_url = ''
 
@@ -53,12 +57,12 @@ LastVisitedPage = ''
 #rhogallery_webservice = 'http://192.168.1.108:9292'
 
 #STAGING
-rhogallery_webservice = 'https://gallerystaging.rhohub.com'
-syncserver = 'http://rhogallery-sync-staging-next.herokuapp.com'
+#rhogallery_webservice = 'https://gallerystaging.rhohub.com'
+#syncserver = 'http://rhogallery-sync-staging-next.herokuapp.com'
 
 #PROD
-#rhogallery_webservice = 'https://rhogallery-web-prod.herokuapp.com'
-#syncserver = 'http://rhogallery-sync-prod-next.herokuapp.com'
+rhogallery_webservice = 'https://gallery.rhohub.com'
+syncserver = 'http://rhogallery-sync-prod-next.herokuapp.com'
 
 sync_poll_interval=0
 
@@ -76,7 +80,7 @@ disable_loading_indication = 1
 # Port of the local (embedded) HTTP server. This parameter is mainly for debug purposes.
 # If not specified, application will use dynamically selected one.
 # WARNING!!! Remove this parameter before put application to production.
-local_server_port = 8080
+#local_server_port = 8080
 
 # show status bar on windows mobile. default 1
 #wm_show_statusbar = 1

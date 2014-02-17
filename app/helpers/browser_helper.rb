@@ -41,21 +41,21 @@ module BrowserHelper
     btn = "btn "
     if galleryapp.downloading == "true"
       btn += "btn-warning blink "
-      name = "downloading"
+      name = "Downloading"
     else
       case state_install
       when "true"
         btn += "btn-success "
-        name = "open"
+        name = "Open"
       when "false"
         btn += "btn-default "
-        name = "install"
+        name = "Install"
       when "maybe"
         btn += "btn-danger "
-        name = "uninstall"
+        name = "Uninstall"
       else
         btn += "btn-default "
-        name = "install"
+        name = "Install"
       end
     end
     btn += "btn-xs"

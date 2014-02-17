@@ -6,7 +6,6 @@ class GalleryController < Rho::RhoController
 
   # GET /Gallery
   def index
-    puts "inside gallery index"
     if SyncEngine::logged_in > 0
       Organization.curr_org = Organization.find(:first) unless Organization.curr_org
       @galleries = Gallery.find(:all,:conditions=>{"owner_id" => Organization.curr_org.object})
@@ -16,7 +15,11 @@ class GalleryController < Rho::RhoController
         render :action=>:index, :back => "/app/Organization"
       end
     else
-      redirect :controller=>:Settings,:action => :login, :query=>{:msg=>nil}
+      if Rho::RhoConfig.email.size > 0
+        redirect :controller=>:Settings,:action => :do_login,:query=>{:email=>Rho::RhoConfig.email,:password=>Rho::RhoConfig.password} 
+      else
+        redirect :controller=>:Settings,:action => :login, :query=>{:msg=>nil}
+      end
     end
   end
 
