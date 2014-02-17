@@ -70,6 +70,8 @@ class SettingsController < Rho::RhoController
   def logout
     Rhom::Rhom.database_full_reset
     Rho::RhoConnectClient.logout
+    Settings.sync = false
+    WebView.execute_js("hide_sync();");
     @msg = "You have been logged out."
     render :action => :login
   end

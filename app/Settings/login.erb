@@ -6,14 +6,20 @@
     <% if @msg.size > 0 %>
       <div class="alert alert-danger"><%= @msg %></div>
     <% end %>
-    <form role="form" action="/app/Settings/do_login" style='padding:0 5px 0 5px'>
-      <div class='form-group'>
-        <input name='email' type='email' class='form-control' id='email' placeholder="Email" />
-      </div>
-      <div class='form-group'>
-         <input name='password' type='password' class='form-control' id='password' placeholder="Password" />
-      </div>
-      <button type="submit" class="btn btn-default" style="margin-top:5px">Login</button>
-    </form>
+    <% if Rho::RhoConfig.email.size > 0 %>
+      <center style='margin:0 5px 0 5px'>
+        <a href='/app/Settings/do_login?email=<%=Rho::RhoConfig.email%>&password=<%=Rho::RhoConfig.password%>' class='btn btn-primary btn-lg btn-block'>Retry Login</a>
+      </center>
+    <% else %>
+      <form role="form" action="/app/Settings/do_login" style='padding:0 5px 0 5px'>
+        <div class='form-group'>
+          <input name='email' type='email' class='form-control' id='email' placeholder="Email" />
+        </div>
+        <div class='form-group'>
+           <input name='password' type='password' class='form-control' id='password' placeholder="Password" />
+        </div>
+        <button type="submit" class="btn btn-default" style="margin-top:5px">Login</button>
+      </form>
+    <% end %>
   </div>
 </div>

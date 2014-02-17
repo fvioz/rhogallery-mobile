@@ -11,6 +11,11 @@ class Organization
   class << self
     attr_accessor :curr_org
   end
+
+  def self.find_owner
+    setting = Settings.find(:all)[0]
+    Organization.find(:first,:conditions=>{:email=>setting.username}) if setting.username
+  end
   
   def galleries
     Gallery.find(:all,:conditions =>{:owner_id =>self.object})

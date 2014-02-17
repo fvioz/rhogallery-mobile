@@ -7,7 +7,7 @@ class GalleryController < Rho::RhoController
   # GET /Gallery
   def index
     if SyncEngine::logged_in > 0
-      Organization.curr_org = Organization.find(:first) unless Organization.curr_org
+      Organization.curr_org = Organization.find_owner unless Organization.curr_org
       @galleries = Gallery.find(:all,:conditions=>{"owner_id" => Organization.curr_org.object})
       if @galleries && @galleries.length == 1
         redirect :controller => :GalleryApp, :action => :index, :query => {:id => @galleries[0].object}
