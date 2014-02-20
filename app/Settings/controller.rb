@@ -30,7 +30,7 @@ class SettingsController < Rho::RhoController
         @msg = @params['error_message']
       end
         
-      if !@msg || @msg.length == 0   
+      if !@msg || @msg.length == 0
         @msg = Rho::RhoError.new(errCode).message
       end
       

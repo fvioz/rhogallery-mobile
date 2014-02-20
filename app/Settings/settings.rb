@@ -10,10 +10,12 @@ class Settings
   def self.process_ok(source_name)
     case source_name
     when "Version"
-      version = Version.find(:first)
-      if version.version != Rho::RhoConfig.version
+      platform = System::get_property('platform').downcase
+      v        = Version.find(platform)
+      org      = Organization.find_owner
+      if v.version != Rho::RhoConfig.version
         SyncEngine.stop_sync
-        WebView.navigate( url_for :action => :badversion )
+        System.open_url(org.short_url)
       end
     #build is last synced resource, hide sync indicators after
     when "BuildInstall"
