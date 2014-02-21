@@ -7,10 +7,14 @@ class OrganizationController < Rho::RhoController
   # GET /Organization
   def index
     if SyncEngine::logged_in > 0
-      @organizations = Organization.find(:all)
-      render :back => '/app'
+      #remove user account if no gallereis
+      @organizations = Organization.find(:all).delete_if{|org|org.galleries.size < 1}
     else
-      redirect :controller=>:Settings,:action => :login,:query=>{:msg=>nil}
+      if Rho::RhoConfig.email.size > 0
+        redirect :controller=>:Settings,:action => :do_login,:query=>{:email=>Rho::RhoConfig.email,:password=>Rho::RhoConfig.password} 
+      else
+        redirect :controller=>:Settings,:action => :login, :query=>{:msg=>nil}
+      end
     end
   end
 

@@ -18,9 +18,13 @@ class Settings
         System.open_url(org.short_url)
       end
     #build is last synced resource, hide sync indicators after
+    when "Organization"
+      WebView.navigate("/app/Organization")
+    when "GalleryApp"
+      WebView.navigate("/app/Organization")
     when "BuildInstall"
       Settings.sync = false
-      WebView.execute_js("hide_sync();");
+      WebView.execute_js("hide_sync();")
     end
   end
 

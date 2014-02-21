@@ -42,7 +42,7 @@ class GalleryAppController < Rho::RhoController
             app.downloading = "false"
             app.download_time = ""
             app.save
-            WebView.execute_js("load_page('/app/GalleryApp/index');");
+            WebView.execute_js("load_page('/app/GalleryApp/index');")
           end
           app.state_install= "false"
         end

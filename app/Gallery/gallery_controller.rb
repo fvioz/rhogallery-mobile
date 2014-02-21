@@ -6,22 +6,12 @@ class GalleryController < Rho::RhoController
 
   # GET /Gallery
   def index
-    if SyncEngine::logged_in > 0
-      Organization.curr_org = Organization.find_owner unless Organization.curr_org
-      @galleries = Gallery.find(:all,:conditions=>{"owner_id" => Organization.curr_org.object})
-      render :action=>:index, :back => "/app/Organization"
-    else
-      if Rho::RhoConfig.email.size > 0
-        redirect :controller=>:Settings,:action => :do_login,:query=>{:email=>Rho::RhoConfig.email,:password=>Rho::RhoConfig.password} 
-      else
-        redirect :controller=>:Settings,:action => :login, :query=>{:msg=>nil}
-      end
-    end
+    @galleries = Gallery.find(:all,:conditions=>{"owner_id" => Organization.curr_org.object})
   end
 
   def do_sync
     Settings.sync = true
-    WebView.execute_js("show_sync();");
+    WebView.execute_js("show_sync();")
     Rho::RhoConnectClient.doSync
     WebView.navigate(url_for(:action => :index))
   end

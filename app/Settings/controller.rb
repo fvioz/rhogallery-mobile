@@ -20,8 +20,8 @@ class SettingsController < Rho::RhoController
     errCode = @params['error_code'].to_i
     if errCode == 0
       # run sync if we were successful
-      Rho::WebView.navigate Rho::Application.settingsPageURI
-      WebView.execute_js("show_sync();");
+      WebView.navigate("/app/Organization")
+      WebView.execute_js("show_sync();")
       Settings.sync = true
       Rho::RhoConnectClient.doSync
     else
