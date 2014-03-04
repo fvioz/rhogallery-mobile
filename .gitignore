@@ -1,4 +1,4 @@
-rholog-*
+rholog*
 sim-*
 bin/libs
 bin/RhoBundle
