@@ -33,9 +33,10 @@ $(function() {
       $("#back-btn").hide();
     else
       $("#back-btn").show();
-    //alert("href is:" + href);
+    
     $(".page").load(href,function(resp){
       Pace.stop();
+      $.get("/app/Settings/set_current_url?id="+ get_url_class(href));
     });
   });
 
@@ -138,8 +139,7 @@ function load_page(href){
 }
 
 function get_back_href(href){
-  switch(true)
-  {
+  switch(true){
   case /uninstall_app/.test(href):
     return "/app/GalleryApp/index";
   case /Review/.test(href):
@@ -154,6 +154,25 @@ function get_back_href(href){
     return "/app/Organization";
   default:
     return "/app/Gallery";
+  }
+}
+
+function get_url_class(href){
+  switch(true){
+    case /uninstall_app/.test(href):
+      return "GalleryApp";
+    case /Review/.test(href):
+      return "Review";
+    case /GalleryApp\/index/.test(href):
+      return "GalleryApp";
+    case /GalleryApp\/show/.test(href):
+      return "GalleryApp";
+    case /Gallery/.test(href):
+      return "Gallery";
+    case /Organization\/set_org/.test(href):
+      return "Gallery";
+    default:
+      return "Organization";
   }
 }
 

@@ -4,7 +4,7 @@ class Settings
   include Rhom::PropertyBag
   @@settings = false
   class << self
-    attr_accessor :sync
+    attr_accessor :sync,:current_url
   end
 
   def self.process_ok(source_name)
@@ -17,11 +17,21 @@ class Settings
         SyncEngine.stop_sync
         System.open_url(org.short_url)
       end
+    # when "CustomBuild"
+    #   platform = System::get_property('platform').downcase
+    #   cb = CustomBuild.find(platform)
+    #   if cb.version != Rho::RhoConfig.version
+    #     SyncEngine.stop_sync
+    #     System.open_url(cb.short_url)
+    #   end
     #build is last synced resource, hide sync indicators after
     when "Organization"
-      WebView.navigate("/app/Organization")
+      WebView.navigate("/app/Organization") if Settings.current_url == "Organization"
     when "GalleryApp"
-      WebView.navigate("/app/Organization")
+      WebView.navigate("/app/GalleryApp") if Settings.current_url == "GalleryApp"
+    when "Gallery"
+      WebView.navigate("/app/Gallery") if Settings.current_url == "Gallery"
+      WebView.navigate("/app/Organization") if Settings.current_url == "Organization"
     when "BuildInstall"
       Settings.sync = false
       WebView.execute_js("hide_sync();")

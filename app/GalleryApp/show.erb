@@ -19,7 +19,7 @@
             <%end%>
             &nbsp;(<%=@galleryapp.reviews.count%>)<br/>
             <a href="<%=url%>" class="<%=btn_kls%> custom-link"><%=btn_name%></a>
-            <%if btn_name == 'open'%>
+            <%if btn_name == 'Open'%>
               <a href="/app/GalleryApp/uninstall_app?bundle_id=<%=Rho::RhoSupport.url_encode(@galleryapp.select_build_link.bundle_id)%>&id=<%=@galleryapp.object%>" class='btn btn-danger btn-xs custom-link'>uninstall</a>
             <%end%>
           </td>

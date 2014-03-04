@@ -27,30 +27,24 @@
     <!-- For all other devices -->
     <!-- Size should be 32 x 32 pixels -->
     <%#= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
+      <script src="/public/jquery/jquery-1.9.1.min.js" type="text/javascript"></script>
 
-    <% if Rho::System.getProperty('platform') == 'APPLE' || Rho::System.getProperty('platform') == 'ANDROID' ||
-        ( Rho::System.getProperty('platform') != 'WINDOWS' && Rho::System.getProperty('webviewFramework') =~ /^WEBKIT/) %>
-        <!--script src="/public/api/rhoapi-modules.js" type="text/javascript"></script> -->
-
-        <script src="/public/jquery/jquery-1.9.1.min.js" type="text/javascript"></script>
-
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="/public/css/bootstrap.css">
-        <link rel="stylesheet" href="/public/css/iscroll.css">
-        <link rel="stylesheet" href="/public/css/jquery.sidr.dark.css">
-        <link rel="stylesheet" href="/public/css/custom.css">
-        <!-- Latest compiled and minified JavaScript -->
-        <script src="/public/js/bootstrap.min.js"></script>
-        <script src="/public/js/iscroll-lite.js"></script>
-        <script src='/public/js/fastclick.js' type='text/javascript'></script>
-        <script src='/public/js/jquery.sidr.min.js' type='text/javascript'></script>
-        <script src="/public/js/jquery.touchSwipe.min.js"></script>
-        <script src="/public/js/pace.js"></script>
-        <script src="/public/js/application.js" type="text/javascript"></script>
-        <% if Rho::System.getProperty('platform') == 'ANDROID' %>
-          <script src="/public/js/androidfix.js"></script>
-        <%end%>
-    <% end %>
+      <!-- Latest compiled and minified CSS -->
+      <link rel="stylesheet" href="/public/css/bootstrap.css">
+      <link rel="stylesheet" href="/public/css/iscroll.css">
+      <link rel="stylesheet" href="/public/css/jquery.sidr.dark.css">
+      <link rel="stylesheet" href="/public/css/custom.css">
+      <!-- Latest compiled and minified JavaScript -->
+      <script src="/public/js/bootstrap.min.js"></script>
+      <script src="/public/js/iscroll-lite.js"></script>
+      <script src='/public/js/fastclick.js' type='text/javascript'></script>
+      <script src='/public/js/jquery.sidr.min.js' type='text/javascript'></script>
+      <script src="/public/js/jquery.touchSwipe.min.js"></script>
+      <script src="/public/js/pace.js"></script>
+      <script src="/public/js/application.js" type="text/javascript"></script>
+      <% if Rho::System.getProperty('platform') == 'ANDROID' %>
+        <script src="/public/js/androidfix.js"></script>
+      <%end%>
    <!--
 -->
 </head>

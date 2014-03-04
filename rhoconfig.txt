@@ -1,6 +1,6 @@
 # startup page for your application
 start_path = '/app/Organization'
-version = 0.4
+version = 0.5
 # path to the options page (in this case handled by javascript)
 options_path = '/app/Settings'
 
@@ -58,11 +58,11 @@ LastVisitedPage = ''
 
 #STAGING
 #rhogallery_webservice = 'https://gallerystaging.rhohub.com'
-#syncserver = 'http://rhogallery-sync-staging-next.herokuapp.com'
+#syncserver = 'https://rhogallery-sync-staging-next.herokuapp.com'
 
 #PROD
 rhogallery_webservice = 'https://gallery.rhohub.com'
-syncserver = 'http://rhogallery-sync-prod-next.herokuapp.com'
+syncserver = 'https://rhogallery-sync-prod-next.herokuapp.com'
 
 sync_poll_interval=0
 

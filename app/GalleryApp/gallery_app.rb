@@ -34,7 +34,7 @@ class GalleryApp
   def select_build_link
     platforms = {
       'APPLE' => 'ios', 
-      'WINDOWS' => 'Windows Mobile', 
+      'WINDOWS' => 'windows_mobile', 
       'ANDROID' => 'android',
       'WINDOWS_DESKTOP' => 'Win32'
     }

@@ -6,14 +6,16 @@ class GalleryController < Rho::RhoController
 
   # GET /Gallery
   def index
-    @galleries = Gallery.find(:all,:conditions=>{"owner_id" => Organization.curr_org.object})
+    org = Organization.curr_org || Organization.find(:all).first
+    @galleries = Gallery.find(:all,:conditions=>{"owner_id" => org.object})
   end
 
   def do_sync
     Settings.sync = true
     WebView.execute_js("show_sync();")
     Rho::RhoConnectClient.doSync
-    WebView.navigate(url_for(:action => :index))
+    puts "Settings.current_url is *********************** #{Settings.current_url}"
+    WebView.navigate("/app/#{Settings.current_url}")
   end
 
   #GET /Gallery/{1}

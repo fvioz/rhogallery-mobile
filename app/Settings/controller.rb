@@ -16,10 +16,16 @@ class SettingsController < Rho::RhoController
     render :action => :login
   end
 
+  def set_current_url
+    puts "current url set to #{@params['id']}"
+    Settings.current_url = @params['id']
+  end
+
   def login_callback
     errCode = @params['error_code'].to_i
     if errCode == 0
       # run sync if we were successful
+      Settings.current_url = "Organization"
       WebView.navigate("/app/Organization")
       WebView.execute_js("show_sync();")
       Settings.sync = true
@@ -101,7 +107,6 @@ class SettingsController < Rho::RhoController
     status = @params['status'] ? @params['status'] : ""
     
     # un-comment to show a debug status pop-up
-    #Rho::Notification.showStatus( "Status", "#{@params['source_name']} : #{status}", Rho::RhoMessages.get_message('hide'))
     if status == "ok"
       Settings.process_ok(@params['source_name'])
     elsif status == "complete"
