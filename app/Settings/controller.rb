@@ -101,9 +101,18 @@ class SettingsController < Rho::RhoController
     @msg =  "Sync has been triggered."
     redirect :action => :index, :query => {:msg => @msg}
   end
+
+  def update_callback
+    update if @params["button_id"] == "Update"
+  end
+
+  def update
+    platform = System::get_property('platform').downcase
+    cb = CustomBuild.find(:first,conditions:{:build_type=>platform})
+    System.openUrl(cb.url)
+  end
   
   def sync_notify
-    platform = System::get_property('platform')
     status = @params['status'] ? @params['status'] : ""
     
     # un-comment to show a debug status pop-up

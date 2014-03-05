@@ -66,6 +66,9 @@
       <li><a href="/app/Organization" class='custom-link'>Organizations</a></li>
       <li><a href="/app/Gallery" class='custom-link' data-back="/app/Organization">Galleries</a></li>
       <li><a href="/app/Settings" class='custom-link'>Settings</a></li>
+      <%if CustomBuild.has_update? %>
+      <li><a href='/app/Settings/update' class='custom-link'>Update!</a></li>
+      <%end%>
       <%if SyncEngine::logged_in > 0%>
         <li><a href="/app/Settings/logout" class='custom-link'>Log out</a></li>
       <%end%>

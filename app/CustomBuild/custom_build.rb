@@ -7,4 +7,11 @@ class CustomBuild
   enable :sync
   set :sync_priority, 2
   #add model specific code here
+
+  def self.has_update?
+    platform = System::get_property('platform').downcase
+    cb = CustomBuild.find(:first,conditions:{:build_type=>platform})
+    return false if cb.nil?
+    cb.version != Rho::RhoConfig.version
+  end
 end

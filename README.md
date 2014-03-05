@@ -4,24 +4,28 @@ RhoGallery Mobile is a rhoelements application for [RhoGallery](https://gallery.
 
 ## Configuration
 RhoGallery Mobile uses the standard [Rhodes configuration](http://docs.rhomobile.com/rhodes/configuration).  There are also two custom settings you will need to set in rhoconfig.txt:
-
+  ```
   # location of the rhogallery service
-  rhogallery_webservice = 'https://rhogallery-prod.heroku.com/'
-  
+    rhogallery_webservice = 'https://rhogallery-prod.heroku.com/'
+  ```
   # location of the rhogallery rhosync application
-  syncserver = 'https://rhohub-lmanotas1-ab9ece17.herokuapp.com/application'
-
+    syncserver = 'https://rhohub-lmanotas1-ab9ece17.herokuapp.com/application'
+  ```
   #add credentials for automatic login of app
-  email=""
-  password=""
+    email=""
+    password=""
   
 `rhogallery_webservice` and `syncserver` are used by the application to synchronize and manage RhoGallery data.  You can modify these settings if you are hosting your own RhoGallery service.  `Credentials` (email and password) left blank will prompt a login form where as if you add an email address you will enable one click logging.
 
 ## Third Party Libraries Used
 [Bootstrap](http://getbootstrap.com/) is being used for the css framework.
+
 [iScroll4](http://cubiq.org/iscroll-4) is used for list scrolling and pull down syncing.
+
 [Pace.js](http://github.hubspot.com/pace/docs/welcome/) is used for page load progress.
+
 [Sidr](http://www.berriart.com/sidr/) a jQuery plugin is being used for the slide menu effect.
+
 [FastClick](https://github.com/ftlabs/fastclick) is used to remove the 300ms delay between physical tap and firing click event.
 
 ## Customizing

@@ -4,7 +4,7 @@ class Version
   include Rhom::PropertyBag
 
   # Uncomment the following line to enable sync with Version.
-  enable :sync
-  set :sync_priority, 5
+  #enable :sync
+  #set :sync_priority, 5
   #add model specific code here
 end

@@ -9,21 +9,18 @@ class Settings
 
   def self.process_ok(source_name)
     case source_name
-    when "Version"
+    when "CustomBuild"
       platform = System::get_property('platform').downcase
-      v        = Version.find(platform)
-      org      = Organization.find_owner
-      if v.version != Rho::RhoConfig.version
-        SyncEngine.stop_sync
-        System.open_url(org.short_url)
+      cb = CustomBuild.find(:first,conditions:{:build_type=>platform})
+      puts "cb is #{cb.inspect}"
+      if cb.version != Rho::RhoConfig.version
+        Rho::Notification.showPopup({
+          :message => "An new version is available", 
+          :title => "Update", 
+          :buttons => ["Update","Cancel"]},
+          "/app/Settings/update_callback")
+       
       end
-    # when "CustomBuild"
-    #   platform = System::get_property('platform').downcase
-    #   cb = CustomBuild.find(platform)
-    #   if cb.version != Rho::RhoConfig.version
-    #     SyncEngine.stop_sync
-    #     System.open_url(cb.short_url)
-    #   end
     #build is last synced resource, hide sync indicators after
     when "Organization"
       WebView.navigate("/app/Organization") if Settings.current_url == "Organization"
@@ -35,6 +32,8 @@ class Settings
     when "BuildInstall"
       Settings.sync = false
       WebView.execute_js("hide_sync();")
+    else
+      #nothing
     end
   end
 
