@@ -4,13 +4,13 @@ RhoGallery Mobile is a rhoelements application for [RhoGallery](https://gallery.
 
 ## Configuration
 RhoGallery Mobile uses the standard [Rhodes configuration](http://docs.rhomobile.com/rhodes/configuration).  There are also two custom settings you will need to set in rhoconfig.txt:
-  ```
+
   # location of the rhogallery service
     rhogallery_webservice = 'https://rhogallery-prod.heroku.com/'
-  ```
+
   # location of the rhogallery rhosync application
     syncserver = 'https://rhohub-lmanotas1-ab9ece17.herokuapp.com/application'
-  ```
+
   #add credentials for automatic login of app
     email=""
     password=""
