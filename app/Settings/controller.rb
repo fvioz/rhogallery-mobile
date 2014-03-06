@@ -109,7 +109,13 @@ class SettingsController < Rho::RhoController
   def update
     platform = System::get_property('platform').downcase
     cb = CustomBuild.find(:first,conditions:{:build_type=>platform})
-    System.openUrl(cb.url)
+    if platform == "APPLE"
+        url = "itms-services://?action=download-manifest&url=#{url}"
+        System.openUrl(cb.url)
+    else
+      download_update(cb.url)
+    end
+    WebView.execute_js(WebView.execute_js("load_page('#{Settings.current_url}');"))
   end
   
   def sync_notify
@@ -144,4 +150,24 @@ class SettingsController < Rho::RhoController
   end  
 
   
+  def download_update(url)
+    filename = url.split("/").last
+    dwnldpath = Rho::RhoFile.join(Rho::Application.userFolder,filename)
+    filepath = "file://#{dwnldpath}"
+    puts "filepath to download is #{filepath}"
+    downloadfileProps = Hash.new
+    downloadfileProps["url"]=url
+    downloadfileProps["filename"] = dwnldpath
+    downloadfileProps["overwriteFile"] = true
+    Rho::Network.downloadFile(downloadfileProps, url_for(:action => :download_update_callback),"&file=#{filepath}")
+  end
+
+  def download_update_callback
+    puts "update hit params are #{@params}"
+    if @params["status"] == "ok"
+      System.applicationInstall(@params['file'])
+    else
+      Rho::Notification.showPopup({:message => "Update failed to download.", :title => "Alert",:buttons=>['Close']})
+    end
+  end
 end

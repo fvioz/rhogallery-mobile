@@ -93,7 +93,6 @@ class GalleryAppController < Rho::RhoController
   end
 
   def download_file_callback
-    #platform = System::get_property('platform')
     gallery_app = GalleryApp.find(@params['id'])
     if @params["status"] == "ok"
       System.applicationInstall(@params['file'])
