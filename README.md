@@ -28,6 +28,8 @@ RhoGallery Mobile uses the standard [Rhodes configuration](http://docs.rhomobile
 
 [FastClick](https://github.com/ftlabs/fastclick) is used to remove the 300ms delay between physical tap and firing click event.
 
+[TouchSwipe](http://labs.rampinteractive.co.uk/touchSwipe/demos/) a jQuery plugin that detects device swipes(up,down,left,right)
+
 ## Customizing
 You will want to look at the following files/directories to customize the look & feel of RhoGallery Mobile:
 
