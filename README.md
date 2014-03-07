@@ -6,7 +6,7 @@ RhoGallery Mobile is a rhoelements application for [RhoGallery](https://gallery.
 RhoGallery Mobile uses the standard [Rhodes configuration](http://docs.rhomobile.com/rhodes/configuration).  There are also two custom settings you will need to set in rhoconfig.txt:
 
   # location of the rhogallery service
-    rhogallery_webservice = 'https://rhogallery-prod.heroku.com/'
+    rhogallery_webservice = 'https://gallery.rhohub.com/'
 
   # location of the rhogallery rhosync application
     syncserver = 'https://rhohub-lmanotas1-ab9ece17.herokuapp.com/application'
@@ -14,7 +14,7 @@ RhoGallery Mobile uses the standard [Rhodes configuration](http://docs.rhomobile
   #add credentials for automatic login of app
     email=""
     password=""
-  
+
 `rhogallery_webservice` and `syncserver` are used by the application to synchronize and manage RhoGallery data.  You can modify these settings if you are hosting your own RhoGallery service.  `Credentials` (email and password) left blank will prompt a login form where as if you add an email address you will enable one click logging.
 
 ## Third Party Libraries Used
@@ -48,23 +48,23 @@ This app is tested with the latest release of rhodes.  To build RhoGallery Mobil
 Development builds:
 
   $ rake run:iphone
-  
+
 Distribution builds:
 
 1) Edit build.yml with your codesignidentity & provisionprofile, sdk and configuration:
 
-  iphone: 
+  iphone:
     provisionprofile: <your-profile-uuid-here>
     sdk: iphoneos5.1
     codesignidentity: iPhone Distribution
-    entitlements: 
+    entitlements:
     configuration: Distribution
 
 2) Build for distribution:
 
   $ rake device:iphone:production #=> produces the build: bin/target/iOS/iphoneos5.1/Debug/RhoGallery.ipa
-  
-  
+
+
 3) Create your distribution plist using [this sample](https://gist.github.com/826832).  If you are hosting your own RhoGallery service, you will upload this plist file along with RhoGallery.ipa.
 
 ### Android
@@ -72,9 +72,9 @@ Development builds:
 
   $ rake run:android
   $ rake run:android:device //for device testing
-  
+
 Distribution builds:
-  
+
   $ rake device:android:production
 
 
@@ -82,9 +82,9 @@ Distribution builds:
 Development builds:
 
   $ rake run:wm
-  
+
 Distribution builds:
-  
+
   $ rake device:wm:production
 
 
